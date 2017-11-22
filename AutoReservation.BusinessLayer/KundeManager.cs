@@ -44,15 +44,9 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationContext())
             {
-                var entity = context.Kunden.Find(kunde.Id);
-                if (entity == null)
-                {
-                    return;
-                }
-
                 try
                 {
-                    context.Entry(entity).CurrentValues.SetValues(kunde);
+                    context.Entry(kunde).State = EntityState.Modified;
                     context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -68,6 +62,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
+                    context.Entry(kunde).State = EntityState.Deleted;
                     context.Kunden.Remove(kunde);
                     context.SaveChanges();
                 }
