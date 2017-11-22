@@ -7,6 +7,7 @@ namespace AutoReservation.Dal.Entities
 {
     public class Auto
     {
+        [Key]
         public int Id { get; set; }
         public string Marke { get; set; }
         public byte[] RowVersion { get; set; }
