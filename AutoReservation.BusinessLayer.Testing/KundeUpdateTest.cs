@@ -19,9 +19,21 @@ namespace AutoReservation.BusinessLayer.Testing
         }
 
         [TestMethod]
+        public void FindKundeTest()
+        {
+            Kunde k = Target.Find(1);
+            Assert.AreEqual(k.Id, 1);
+        }
+
+        [TestMethod]
         public void UpdateKundeTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            string newNachname = "updated";
+            Kunde kunde = Target.Find(1);
+            kunde.Nachname = newNachname;
+            Target.Update(kunde);
+            Kunde kundeUpdated = Target.Find(1);
+            Assert.AreEqual(kundeUpdated.Nachname, newNachname);
         }
     }
 }
