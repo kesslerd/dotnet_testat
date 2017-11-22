@@ -1,2 +1,2 @@
-# disabled automatic builds
+# disable automatic builds
 build: off
