@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AutoReservation.Common", "AutoReservation.Common\AutoReservation.Common.csproj", "{22972439-3FFF-41D2-B5AE-6C06ABC66EB4}"
 EndProject
@@ -171,6 +171,9 @@ Global
 		{85305EF6-3B4F-4B7C-B39D-780FA9950156} = {8C52366D-F400-4ADF-B894-082CA580BECA}
 		{943E927C-BFCD-4DD6-8DD3-AECCF5F7BC4B} = {8C52366D-F400-4ADF-B894-082CA580BECA}
 		{0BECFAB3-1408-4005-A38A-6C4284C93658} = {8C52366D-F400-4ADF-B894-082CA580BECA}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {89710155-C5D0-4B4C-B917-1121E087165B}
 	EndGlobalSection
 	GlobalSection(TestCaseManagementSettings) = postSolution
 		CategoryFile = AutoReservation.vsmdi
