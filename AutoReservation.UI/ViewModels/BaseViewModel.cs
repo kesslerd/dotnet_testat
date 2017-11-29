@@ -12,7 +12,7 @@ namespace AutoReservation.UI.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string name = null, , params string[] otherNames)
+        protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string name = null, params string[] otherNames)
         {
             if (Equals(field, value))
                 return false;
