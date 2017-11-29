@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace AutoReservation.UI.ViewModels
 {
-    class KundeViewModel
+    class KundeViewModel : BaseViewModel
     {
+       
     }
 }
