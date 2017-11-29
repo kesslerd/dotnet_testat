@@ -12,6 +12,8 @@ namespace AutoReservation.BusinessLayer
     public class ReservationManager
         : ManagerBase
     {
+        private const string DateTimeFormat = "dd.MM.yyyy HH:mm:ss";
+
         public List<Reservation> List
         {
             get
@@ -108,12 +110,31 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        private bool CheckAvailability(Reservation reservation)
+        /// <summary>
+        /// Checks whether the given Reservation overlaps with an existing one.
+        /// Should this be the case, an <see cref="AutoUnavailableException"/> will be thrown.
+        /// </summary>
+        /// <param name="reservation"></param>
+        private void CheckAvailability(Reservation reservation)
         {
-            // TODO Check for availability
+            using (var context = new AutoReservationContext())
+            {
+                var query = (from p in context.Reservationen
+                             where (
+                                 (reservation.Von <= p.Von && reservation.Bis >= p.Bis) ||
+                                 (reservation.Von <= p.Von && reservation.Bis <= p.Bis) ||
+                                 (reservation.Von >= p.Von && reservation.Bis <= p.Bis) ||
+                                 (reservation.Von >= p.Von && reservation.Bis >= p.Bis)
+                             )
+                             select p
+                            ).Any();
 
-            return false;
+                if (query)
+                {
+                    throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
+                }
+            }
         }
-
     }
+
 }
