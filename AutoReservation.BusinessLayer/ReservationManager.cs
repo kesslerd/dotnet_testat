@@ -22,11 +22,11 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public Kunde Find(int id)
+        public Reservation Find(int id)
         {
             using (var context = new AutoReservationContext())
             {
-                return context.Kunden.Find(id);
+                return context.Reservationen.Find(id);
             }
         }
 
