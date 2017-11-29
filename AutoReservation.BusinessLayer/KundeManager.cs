@@ -61,7 +61,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Kunden.Remove(kunde);
+                    context.Entry(kunde).State = EntityState.Deleted;
                     context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)
