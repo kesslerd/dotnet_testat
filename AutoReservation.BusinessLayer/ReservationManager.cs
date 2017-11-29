@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
 using AutoReservation.Dal.Entities;
+using AutoReservation.BusinessLayer.Exceptions;
 
 namespace AutoReservation.BusinessLayer
 {
@@ -34,7 +35,8 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationContext())
             {
-                // TODO Constraints einbauen
+                CheckDateRange(reservation.Von, reservation.Bis);
+                CheckAvailability(reservation);
 
                 context.Entry(reservation).State = EntityState.Added;
                 context.Reservationen.Add(reservation);
@@ -48,7 +50,8 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    // TODO Constraints einbauen
+                    CheckDateRange(reservation.Von, reservation.Bis);
+                    CheckAvailability(reservation);
 
                     context.Entry(reservation).State = EntityState.Modified;
                     context.SaveChanges();
@@ -76,5 +79,41 @@ namespace AutoReservation.BusinessLayer
                 }
             }
         }
+
+        /// <summary>
+        /// Checks the given dates for two things:
+        /// <list type="bullet">
+        /// <item>
+        /// <description>Is <c>To</c> before <c>From</c>?</description>
+        /// </item>
+        /// <item>
+        /// <description>Is the duration between <c>From</c> and <c>To</c> less then 1 day?</description>
+        /// </item>
+        /// </list>
+        /// Should any of these conditions be <c>true</c>, this check will throw an <see cref="InvalidDateRangeException"/>.
+        /// </summary>
+        /// <param name="From"></param>
+        /// <param name="To"></param>
+        private void CheckDateRange(DateTime From, DateTime To)
+        {
+            if (To > From)
+            {
+                throw new InvalidDateRangeException($"Bis-Datum [{To}] liegt vor dem Von-Datum [{From}].");
+            }
+
+            TimeSpan duration = To - From;
+            if (duration.TotalDays < 1)
+            {
+                throw new InvalidDateRangeException($"Zeitspanne von [{From}] bis [{To}] beträgt weniger als 24 Stunden.");
+            }
+        }
+
+        private bool CheckAvailability(Reservation reservation)
+        {
+            // TODO Check for availability
+
+            return false;
+        }
+
     }
 }
