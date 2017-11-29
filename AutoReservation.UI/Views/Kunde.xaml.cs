@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoReservation.UI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,14 +15,22 @@ using System.Windows.Shapes;
 
 namespace AutoReservation.UI.Views
 {
+
     /// <summary>
     /// Interaction logic for Kunde.xaml
     /// </summary>
     public partial class Kunde : Window
     {
+        public KundeViewModel ViewModel { get; set; }
+
+
         public Kunde()
         {
             InitializeComponent();
+
+            ViewModel = new KundeViewModel();
+
+            DataContext = this;
         }
     }
 }

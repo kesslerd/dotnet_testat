@@ -7,7 +7,7 @@ using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.UI.ViewModels
 {
-    class KundeViewModel : BaseViewModel
+    public class KundeViewModel : BaseViewModel
     {
 
         private int _id;
