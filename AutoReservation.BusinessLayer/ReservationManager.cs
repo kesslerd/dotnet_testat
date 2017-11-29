@@ -122,9 +122,9 @@ namespace AutoReservation.BusinessLayer
                 var query = (from p in context.Reservationen
                              where (
                                  (reservation.Von <= p.Von && reservation.Bis >= p.Bis) ||
-                                 (reservation.Von <= p.Von && reservation.Bis <= p.Bis) ||
+                                 (reservation.Von <= p.Von && reservation.Bis >= p.Von) ||
                                  (reservation.Von >= p.Von && reservation.Bis <= p.Bis) ||
-                                 (reservation.Von >= p.Von && reservation.Bis >= p.Bis)
+                                 (reservation.Von <= p.Bis && reservation.Bis >= p.Bis)
                              )
                              select p
                             ).Any();
