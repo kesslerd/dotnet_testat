@@ -16,9 +16,10 @@ namespace AutoReservation.UI.ViewModels
         {
             if (Equals(field, value))
                 return false;
-            field = value;
-            OnPropertyChanged(name);
 
+            field = value;
+
+            OnPropertyChanged(name);
             foreach (var n in otherNames)
             {
                 OnPropertyChanged(n);
