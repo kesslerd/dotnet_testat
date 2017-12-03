@@ -50,6 +50,53 @@ namespace AutoReservation.Service.Wcf
             var kundeEntity = DtoConverter.ConvertToEntity(kunde);
             kundeManager.Update(kundeEntity);
         }
+
+        #endregion
+
+        #region Auto
+
+        AutoManager autoManager = new AutoManager();
+
+        public bool IsAutoAvailable(AutoDto auto, DateTime von, DateTime bis)
+        {
+            WriteActualMethod();
+            // Waiting for Reservation to be merged to check availability
+            throw new NotImplementedException();
+        }
+
+        public AutoDto GetAuto(int id)
+        {
+            WriteActualMethod();
+            return DtoConverter.ConvertToDto(autoManager.Find(id));
+        }
+
+        public List<AutoDto> GetAutos()
+        {
+            WriteActualMethod();
+            return DtoConverter.ConvertToDtos(autoManager.List);
+        }
+
+        public void UpdateAuto(AutoDto auto)
+        {
+            WriteActualMethod();
+            var autoEntity = DtoConverter.ConvertToEntity(auto);
+            autoManager.Update(autoEntity);
+        }
+
+        public void AddAuto(AutoDto auto)
+        {
+            WriteActualMethod();
+            var autoEntity = DtoConverter.ConvertToEntity(auto);
+            autoManager.Add(autoEntity);
+        }
+
+        public void DeleteAuto(AutoDto auto)
+        {
+            WriteActualMethod();
+            var autoEntity = DtoConverter.ConvertToEntity(auto);
+            autoManager.Delete(autoEntity);
+        }
+
         #endregion
     }
 }
