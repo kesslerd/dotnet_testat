@@ -4,9 +4,11 @@ using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.BusinessLayer;
 using System.Collections.Generic;
+using System.ServiceModel;
 
 namespace AutoReservation.Service.Wcf
 {
+    [ServiceBehavior(InstanceContextMode = InstanceContextMode.PerSession)]
     public class AutoReservationService : IAutoReservationService
     {
 
