@@ -4,23 +4,73 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Linq;
+using AutoReservation.Dal.Entities;
 
 namespace AutoReservation.BusinessLayer
 {
     public class AutoManager
         : ManagerBase
     {
-        // Example
-        //public List<Auto> List
-        //{
-        //    get
-        //    {
-        //        using (AutoReservationContext context = new AutoReservationContext())
-        //        {
-        //            return context.Autos.ToList();
-        //        }
-        //    }
-        //}
-        
+
+        public List<Auto> List
+        {
+            get
+            {
+                using (var context = new AutoReservationContext())
+                {
+                    return context.Autos.ToList();
+                }
+            }
+        }
+
+        public Auto Find(int id)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                return context.Autos.Find(id);
+            }
+        }
+
+        public void Add(Auto auto)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                context.Autos.Add(auto);
+                context.SaveChanges();
+            }
+        }
+
+        public void Update(Auto auto)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                try
+                {
+                    context.Entry(auto).State = EntityState.Modified;
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw CreateOptimisticConcurrencyException<Auto>(context, auto);
+                }
+            }
+        }
+
+        public void Delete(Auto auto)
+        {
+            using (var context = new AutoReservationContext())
+            {
+                try
+                {
+                    context.Entry(auto).State = EntityState.Deleted;
+                    context.SaveChanges();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    throw CreateOptimisticConcurrencyException<Auto>(context, auto);
+                }
+            }
+        }
+
     }
 }
