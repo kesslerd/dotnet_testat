@@ -13,7 +13,7 @@ namespace AutoReservation.Dal.Entities
         public DateTime Bis { get; set; }
         public DateTime Von { get; set; }
         [Timestamp]
-        public byte[] ReservationsVersion { get; set; }
+        public byte[] RowVersion { get; set; }
 
         public virtual Kunde kunde { get; set; }
         public virtual Auto auto { get; set; }

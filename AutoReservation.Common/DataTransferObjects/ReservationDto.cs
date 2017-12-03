@@ -11,7 +11,7 @@ namespace AutoReservation.Common.DataTransferObjects
         public DateTime Bis { get; set; }
         public AutoDto Auto { get; set; }
         public KundeDto Kunde { get; set; }
-        public byte[] ReservationsVersion { get; set; }
+        public byte[] RowVersion { get; set; }
 
         public override string ToString()
             => $"{ReservationsNr}; {Von}; {Bis}; {Auto}; {Kunde}";
