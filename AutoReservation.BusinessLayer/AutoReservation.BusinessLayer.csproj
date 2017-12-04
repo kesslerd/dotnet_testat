@@ -75,6 +75,8 @@
     <Compile Include="..\Assets\AssemblyInfo.Shared.cs">
       <Link>Properties\AssemblyInfo.Shared.cs</Link>
     </Compile>
+    <Compile Include="Exceptions\AutoUnavailableException.cs" />
+    <Compile Include="Exceptions\InvalidDateRangeException.cs" />
     <Compile Include="ReservationManager.cs" />
     <Compile Include="KundeManager.cs" />
     <Compile Include="ManagerBase.cs" />
