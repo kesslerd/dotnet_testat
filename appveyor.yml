@@ -1,1 +1,7 @@
-# no explicit configuration for noew
+image: Visual Studio 2017
+
+cache:
+        - packages -> **\packages.config
+
+before_build:
+        - nuget restore
