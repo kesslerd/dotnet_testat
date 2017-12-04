@@ -53,7 +53,7 @@ namespace AutoReservation.BusinessLayer
                 try
                 {
                     CheckDateRange(reservation.Von, reservation.Bis);
-                    CheckAvailability(reservation);
+                    CheckAvailability(reservation, true);
 
                     context.Entry(reservation).State = EntityState.Modified;
                     context.SaveChanges();
@@ -115,21 +115,27 @@ namespace AutoReservation.BusinessLayer
         /// Should this be the case, an <see cref="AutoUnavailableException"/> will be thrown.
         /// </summary>
         /// <param name="reservation"></param>
-        private void CheckAvailability(Reservation reservation)
+        /// <param name="ignoreOneself"></param>
+        private void CheckAvailability(Reservation reservation, bool ignoreOneself = false)
         {
             using (var context = new AutoReservationContext())
             {
-                var query = (from p in context.Reservationen
+                var query = (from r in context.Reservationen
                              where (
-                                 (reservation.Von <= p.Von && reservation.Bis >= p.Bis) ||
-                                 (reservation.Von <= p.Von && reservation.Bis >= p.Von) ||
-                                 (reservation.Von >= p.Von && reservation.Bis <= p.Bis) ||
-                                 (reservation.Von <= p.Bis && reservation.Bis >= p.Bis)
+                                 (reservation.Von <= r.Von && reservation.Bis >= r.Bis) ||
+                                 (reservation.Von <= r.Von && reservation.Bis >= r.Von) ||
+                                 (reservation.Von >= r.Von && reservation.Bis <= r.Bis) ||
+                                 (reservation.Von <= r.Bis && reservation.Bis >= r.Bis)
                              )
-                             select p
-                            ).Any();
+                             select r
+                            );
 
-                if (query)
+                if (ignoreOneself)
+                {
+                    query = query.Where(r => r.ReservationsNr != reservation.ReservationsNr);
+                }
+
+                if (query.Any())
                 {
                     throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
                 }
