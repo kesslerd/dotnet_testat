@@ -51,7 +51,13 @@ namespace AutoReservation.BusinessLayer
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    throw CreateOptimisticConcurrencyException<Auto>(context, auto);
+
+                    try
+                    { 
+                        throw CreateOptimisticConcurrencyException<Auto>(context, auto);
+                    } 
+                    catch (NullReferenceException){ }
+
                 }
             }
         }
