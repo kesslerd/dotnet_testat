@@ -46,6 +46,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
+                    if (Find(kunde.Id) == null) return;
                     context.Entry(kunde).State = EntityState.Modified;
                     context.SaveChanges();
                 }
