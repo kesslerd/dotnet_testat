@@ -15,8 +15,8 @@ namespace AutoReservation.Dal.Entities
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public virtual Kunde kunde { get; set; }
-        public virtual Auto auto { get; set; }
+        public virtual Kunde Kunde { get; set; }
+        public virtual Auto Auto { get; set; }
 
     }
 }
