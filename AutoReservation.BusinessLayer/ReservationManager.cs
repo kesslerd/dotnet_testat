@@ -98,7 +98,7 @@ namespace AutoReservation.BusinessLayer
         /// <param name="To"></param>
         private void CheckDateRange(DateTime From, DateTime To)
         {
-            if (To > From)
+            if (To < From)
             {
                 throw new InvalidDateRangeException($"Bis-Datum [{To}] liegt vor dem Von-Datum [{From}].");
             }
@@ -126,7 +126,7 @@ namespace AutoReservation.BusinessLayer
                                  (reservation.Von <= r.Von && reservation.Bis >= r.Von) ||
                                  (reservation.Von >= r.Von && reservation.Bis <= r.Bis) ||
                                  (reservation.Von <= r.Bis && reservation.Bis >= r.Bis)
-                             )
+                             ) && (reservation.AutoId == r.AutoId && reservation.KundeId == r.KundeId)
                              select r
                             );
 
@@ -134,7 +134,7 @@ namespace AutoReservation.BusinessLayer
                 {
                     query = query.Where(r => r.ReservationsNr != reservation.ReservationsNr);
                 }
-
+                
                 if (query.Any())
                 {
                     throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
