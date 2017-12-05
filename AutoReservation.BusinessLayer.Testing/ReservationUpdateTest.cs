@@ -47,7 +47,7 @@ namespace AutoReservation.BusinessLayer.Testing
         }
 
         [TestMethod]
-        [ExpectedException(typeof(Exceptions.OptimisticConcurrencyException<Auto>))]
+        [ExpectedException(typeof(Exceptions.OptimisticConcurrencyException<Reservation>))]
         public void UpdateAutoOptimisticConcurrencyTest()
         {
             Reservation r1 = Target.Find(STANDARD_RESERVATION_ID);
