@@ -126,7 +126,7 @@ namespace AutoReservation.BusinessLayer
                                  (reservation.Von <= r.Von && reservation.Bis >= r.Von) ||
                                  (reservation.Von >= r.Von && reservation.Bis <= r.Bis) ||
                                  (reservation.Von <= r.Bis && reservation.Bis >= r.Bis)
-                             ) && (reservation.AutoId == r.AutoId && reservation.KundeId == r.KundeId)
+                             ) && reservation.AutoId == r.AutoId
                              select r
                             );
 
