@@ -29,7 +29,7 @@ namespace AutoReservation.UI.Views
             InitializeComponent();
 
             ViewModel = new KundeViewModel();
-
+            ViewModel.OnRequestClose += (s, e) => this.Close();
             DataContext = this;
         }
     }
