@@ -135,16 +135,19 @@ namespace AutoReservation.BusinessLayer
         /// <param name="ignoreOneself"></param>
         private void CheckAvailability(Reservation reservation, bool ignoreOneself = false)
         {
-            var query = CreateAvailabilityQuery(reservation.AutoId, reservation.Von, reservation.Bis);
+            using (var context = new AutoReservationContext())
+            {
+                var query = CreateAvailabilityQuery(reservation.AutoId, reservation.Von, reservation.Bis);
 
-            if (ignoreOneself)
-            {
-                query = query.Where(r => r.ReservationsNr != reservation.ReservationsNr);
-            }
-                
-            if (query.Any())
-            {
-                throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
+                if (ignoreOneself)
+                {
+                    query = query.Where(r => r.ReservationsNr != reservation.ReservationsNr);
+                }
+
+                if (query.Any())
+                {
+                    throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
+                }
             }
         }
 
