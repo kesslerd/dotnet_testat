@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoReservation.Common.DataTransferObjects;
 using System.Windows.Input;
+using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -44,6 +45,9 @@ namespace AutoReservation.UI.ViewModels
             set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVerwion)); }
         }
 
+        public event EventHandler OnRequestClose;
+
+
         #region commands
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
@@ -55,12 +59,13 @@ namespace AutoReservation.UI.ViewModels
         {
             if(RowVerwion != null)
             {
-                //save
+                AutoReservationService.UpdateKunde(this.kundeDto);
             }
             else
             {
-                //add
+                AutoReservationService.AddKunde(this.kundeDto);
             }
+            OnRequestClose?.Invoke(this, null);
         }
 
         RelayCommand<object> _cancelCommand;
@@ -71,6 +76,7 @@ namespace AutoReservation.UI.ViewModels
 
         private void executeCancelCommand()
         {
+            OnRequestClose?.Invoke(this, null);
         }
 
         RelayCommand<object> _reloadCommand;
@@ -81,7 +87,11 @@ namespace AutoReservation.UI.ViewModels
 
         private void executeReloadCommand()
         {
-           
+            this.kundeDto = AutoReservationService.GetKunde(this.Id);
+            OnPropertyChanged(nameof(Nachname));
+            OnPropertyChanged(nameof(Vorname));
+            OnPropertyChanged(nameof(Geburtsdatum));
+            OnPropertyChanged(nameof(RowVerwion));
         }
 
         private bool canExecuteReloadCommand()

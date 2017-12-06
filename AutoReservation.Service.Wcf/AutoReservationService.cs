@@ -52,7 +52,7 @@ namespace AutoReservation.Service.Wcf
         }
 
         #endregion
-
+        /**
         #region Auto
 
         AutoManager autoManager = new AutoManager();
@@ -98,5 +98,7 @@ namespace AutoReservation.Service.Wcf
         }
 
         #endregion
+
+        **/
     }
 }
