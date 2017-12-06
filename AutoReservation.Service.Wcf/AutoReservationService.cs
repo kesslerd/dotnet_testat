@@ -52,17 +52,10 @@ namespace AutoReservation.Service.Wcf
         }
 
         #endregion
-        /**
+
         #region Auto
 
         AutoManager autoManager = new AutoManager();
-
-        public bool IsAutoAvailable(AutoDto auto, DateTime von, DateTime bis)
-        {
-            WriteActualMethod();
-            // Waiting for Reservation to be merged to check availability
-            throw new NotImplementedException();
-        }
 
         public AutoDto GetAuto(int id)
         {
@@ -99,6 +92,15 @@ namespace AutoReservation.Service.Wcf
 
         #endregion
 
-        **/
+        #region Reservation
+
+        ReservationManager reservationManager = new ReservationManager();
+
+        public bool IsAutoAvailable(AutoDto auto, DateTime von, DateTime bis)
+        {
+            return reservationManager.CheckAutoAvailability(auto.Id, von, bis);
+        }
+
+        #endregion
     }
 }
