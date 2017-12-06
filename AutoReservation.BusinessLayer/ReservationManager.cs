@@ -110,6 +110,23 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
+
+        private IQueryable<Reservation> CreateAvailabilityQuery(int autoId, DateTime von, DateTime bis)
+        {
+            using (var context = new AutoReservationContext())
+            { 
+                return (from r in context.Reservationen
+                             where (
+                                 (von <= r.Von && bis >= r.Bis) ||
+                                 (von <= r.Von && bis >= r.Von) ||
+                                 (von >= r.Von && bis <= r.Bis) ||
+                                 (von <= r.Bis && bis >= r.Bis)
+                             ) && autoId == r.AutoId
+                             select r
+                            );
+            }
+        }
+
         /// <summary>
         /// Checks whether the given Reservation overlaps with an existing one.
         /// Should this be the case, an <see cref="AutoUnavailableException"/> will be thrown.
@@ -118,29 +135,26 @@ namespace AutoReservation.BusinessLayer
         /// <param name="ignoreOneself"></param>
         private void CheckAvailability(Reservation reservation, bool ignoreOneself = false)
         {
-            using (var context = new AutoReservationContext())
-            {
-                var query = (from r in context.Reservationen
-                             where (
-                                 (reservation.Von <= r.Von && reservation.Bis >= r.Bis) ||
-                                 (reservation.Von <= r.Von && reservation.Bis >= r.Von) ||
-                                 (reservation.Von >= r.Von && reservation.Bis <= r.Bis) ||
-                                 (reservation.Von <= r.Bis && reservation.Bis >= r.Bis)
-                             ) && reservation.AutoId == r.AutoId
-                             select r
-                            );
+            var query = CreateAvailabilityQuery(reservation.AutoId, reservation.Von, reservation.Bis);
 
-                if (ignoreOneself)
-                {
-                    query = query.Where(r => r.ReservationsNr != reservation.ReservationsNr);
-                }
+            if (ignoreOneself)
+            {
+                query = query.Where(r => r.ReservationsNr != reservation.ReservationsNr);
+            }
                 
-                if (query.Any())
-                {
-                    throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
-                }
+            if (query.Any())
+            {
+                throw new AutoUnavailableException($"Im Zeitraum vom {reservation.Von.ToString(DateTimeFormat)} bis zum {reservation.Bis.ToString(DateTimeFormat)} existiert bereits eine Reservation.");
             }
         }
+
+        public bool CheckAutoAvailability(int autoId, DateTime von, DateTime bis)
+        {
+            return !CreateAvailabilityQuery(autoId, von, bis).Any();
+        }
+
     }
+
+ 
 
 }
