@@ -44,7 +44,7 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         void DeleteAuto(AutoDto auto);
-     
-        #endregion  
+        
+        #endregion
     }
 }
