@@ -22,12 +22,18 @@ namespace AutoReservation.UI.Views
     public partial class KundenTab : UserControl
     {
 
-        KundenViewModel ViewModel;
+        public KundenViewModel ViewModel { get; private set; }
 
         public KundenTab()
         {
             InitializeComponent();
             ViewModel = new KundenViewModel();
+            ViewModel.OnRequestCreateKunde += (caller, arg) => { (new Views.Kunde()).ShowDialog(); };
+            ViewModel.OnRequestEditKunde += (caller, id) => { (new Views.Kunde(id)).ShowDialog(); };
+            ViewModel.OnRequestDelete += (caller, action) => {
+                var messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButton.YesNo);
+                action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
+            };
             DataContext = this;
         }
     }
