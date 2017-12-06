@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoReservation.UI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,18 +11,24 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AutoReservation.UI.Views
 {
     /// <summary>
-    /// Interaction logic for Kunden.xaml
+    /// Interaction logic for KundenTab.xaml
     /// </summary>
-    public partial class Kunden : Window
+    public partial class KundenTab : UserControl
     {
-        public Kunden()
+
+        KundenViewModel ViewModel;
+
+        public KundenTab()
         {
             InitializeComponent();
+            ViewModel = new KundenViewModel();
+            DataContext = this;
         }
     }
 }

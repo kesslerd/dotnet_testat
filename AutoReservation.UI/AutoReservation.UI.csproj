@@ -58,13 +58,14 @@
     </ApplicationDefinition>
     <Compile Include="Service\Service.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
+    <Compile Include="ViewModels\KundenViewModel.cs" />
     <Compile Include="ViewModels\KundeViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
     <Compile Include="Views\Kunde.xaml.cs">
       <DependentUpon>Kunde.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Kunden.xaml.cs">
-      <DependentUpon>Kunden.xaml</DependentUpon>
+    <Compile Include="Views\KundenTab.xaml.cs">
+      <DependentUpon>KundenTab.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -82,7 +83,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Kunden.xaml">
+    <Page Include="Views\KundenTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
