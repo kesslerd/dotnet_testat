@@ -57,13 +57,6 @@ namespace AutoReservation.Service.Wcf
 
         AutoManager autoManager = new AutoManager();
 
-        public bool IsAutoAvailable(AutoDto auto, DateTime von, DateTime bis)
-        {
-            WriteActualMethod();
-            // Waiting for Reservation to be merged to check availability
-            throw new NotImplementedException();
-        }
-
         public AutoDto GetAuto(int id)
         {
             WriteActualMethod();
@@ -95,6 +88,17 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
             var autoEntity = DtoConverter.ConvertToEntity(auto);
             autoManager.Delete(autoEntity);
+        }
+
+        #endregion
+
+        #region Reservation
+
+        ReservationManager reservationManager = new ReservationManager();
+
+        public bool IsAutoAvailable(AutoDto auto, DateTime von, DateTime bis)
+        {
+            return reservationManager.CheckAutoAvailability(auto.Id, von, bis);
         }
 
         #endregion
