@@ -101,6 +101,39 @@ namespace AutoReservation.Service.Wcf
             return reservationManager.CheckAutoAvailability(auto.Id, von, bis);
         }
 
+        public ReservationDto GetReservation(int id)
+        {
+            WriteActualMethod();
+            return DtoConverter.ConvertToDto(reservationManager.Find(id));
+        }
+
+        public List<ReservationDto> GetReservations()
+        {
+            WriteActualMethod();
+            return DtoConverter.ConvertToDtos(reservationManager.List);
+        }
+
+        public void UpdateReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            var reservationEntity = DtoConverter.ConvertToEntity(reservation);
+            reservationManager.Update(reservationEntity);
+        }
+
+        public void AddReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            var reservationEntity = DtoConverter.ConvertToEntity(reservation);
+            reservationManager.Add(reservationEntity);
+        }
+
+        public void DeleteReservation(ReservationDto reservation)
+        {
+            WriteActualMethod();
+            var reservationEntity = DtoConverter.ConvertToEntity(reservation);
+            reservationManager.Delete(reservationEntity);
+        }
+
         #endregion
     }
 }

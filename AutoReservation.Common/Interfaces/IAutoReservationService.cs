@@ -44,6 +44,24 @@ namespace AutoReservation.Common.Interfaces
 
         [OperationContract]
         void DeleteAuto(AutoDto auto);
+        #endregion
+
+        #region Reservation
+
+        [OperationContract]
+        ReservationDto GetReservation(int id);
+
+        [OperationContract]
+        List<ReservationDto> GetReservations();
+
+        [OperationContract]
+        void UpdateReservation(ReservationDto reservation);
+
+        [OperationContract]
+        void AddReservation(ReservationDto reservation);
+
+        [OperationContract]
+        void DeleteReservation(ReservationDto reservation);
 
         #endregion
     }
