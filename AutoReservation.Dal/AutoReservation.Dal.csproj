@@ -77,6 +77,18 @@
     </Compile>
     <Compile Include="AutoReservationContext.cs" />
     <Compile Include="Entities\Kunde.cs" />
+    <Compile Include="Migrations\201712061034168_InitialCreate.cs" />
+    <Compile Include="Migrations\201712061034168_InitialCreate.Designer.cs">
+      <DependentUpon>201712061034168_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712061039285_AddAnnotationsToKunde.cs" />
+    <Compile Include="Migrations\201712061039285_AddAnnotationsToKunde.Designer.cs">
+      <DependentUpon>201712061039285_AddAnnotationsToKunde.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201712061042288_AddAnnotationsToAuto.cs" />
+    <Compile Include="Migrations\201712061042288_AddAnnotationsToAuto.Designer.cs">
+      <DependentUpon>201712061042288_AddAnnotationsToAuto.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Entities\Reservation.cs" />
@@ -93,6 +105,17 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201712061034168_InitialCreate.resx">
+      <DependentUpon>201712061034168_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712061039285_AddAnnotationsToKunde.resx">
+      <DependentUpon>201712061039285_AddAnnotationsToKunde.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201712061042288_AddAnnotationsToAuto.resx">
+      <DependentUpon>201712061042288_AddAnnotationsToAuto.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
