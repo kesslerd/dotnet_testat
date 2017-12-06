@@ -44,7 +44,7 @@ namespace AutoReservation.BusinessLayer.Testing
         public void UpdateNonExistingAuto()
         {
             Target.Update(new Auto() { Id = NOT_EXISTING_AUTO_ID });
-            Auto updatedAuto = Target.Find(NOT_EXISTING_AUTO_ID);s
+            Auto updatedAuto = Target.Find(NOT_EXISTING_AUTO_ID);
             Assert.IsNull(updatedAuto);
         }
 

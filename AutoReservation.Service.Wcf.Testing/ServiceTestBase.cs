@@ -52,7 +52,7 @@ namespace AutoReservation.Service.Wcf.Testing
             Assert.Inconclusive("Test not implemented.");
             int id = 1;
             var auto = Target.GetAuto(id);
-            Assert.Equals(id, auto.Id);
+            Assert.AreEqual(id, auto.Id);
         }
 
         [TestMethod]
@@ -60,7 +60,7 @@ namespace AutoReservation.Service.Wcf.Testing
         {
             int id = 1;
             var kunde = Target.GetKunde(id);
-            Assert.Equals(id, kunde.Id);
+            Assert.AreEqual(id, kunde.Id);
         }
 
         [TestMethod]
@@ -68,7 +68,7 @@ namespace AutoReservation.Service.Wcf.Testing
         {
             int reservationsNummer = 1;
             var reservation = Target.GetReservation(reservationsNummer);
-            Assert.Equals(reservationsNummer, reservation.ReservationsNr);
+            Assert.AreEqual(reservationsNummer, reservation.ReservationsNr);
         }
 
         #endregion
@@ -97,6 +97,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
         #region Insert
 
+        // TODO: Insert funktionert nochnicht so wie gewollt
         [TestMethod]
         public void InsertAutoTest()
         {
@@ -113,7 +114,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             var foundAuto = Target.GetAuto(auto.Id);
 
-            Assert.Equals(foundAuto, auto);
+            Assert.AreEqual(auto, foundAuto);
         }
 
         [TestMethod]
@@ -131,7 +132,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             var foundKunde = Target.GetKunde(kunde.Id);
 
-            Assert.Equals(foundKunde, kunde);
+            Assert.AreEqual(kunde, foundKunde);
         }
 
         [TestMethod]
@@ -150,7 +151,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             var foundReservation = Target.GetReservation(reservation.ReservationsNr);
 
-            Assert.Equals(foundReservation, reservation);
+            Assert.AreEqual(reservation, foundReservation);
         }
 
         #endregion
@@ -199,7 +200,7 @@ namespace AutoReservation.Service.Wcf.Testing
             auto.Marke = marke;
             Target.UpdateAuto(auto);
             var updatedAuto = Target.GetAuto(id);
-            Assert.Equals(updatedAuto.Marke, marke);
+            Assert.AreEqual(updatedAuto.Marke, marke);
 
         }
 
@@ -213,7 +214,7 @@ namespace AutoReservation.Service.Wcf.Testing
             kunde.Nachname = nachname;
             Target.UpdateKunde(kunde);
             var updatedKunde = Target.GetKunde(id);
-            Assert.Equals(updatedKunde.Nachname, nachname);
+            Assert.AreEqual(updatedKunde.Nachname, nachname);
         }
 
         // TODO: Update könnte neues Objekt zurückgeben
@@ -226,7 +227,7 @@ namespace AutoReservation.Service.Wcf.Testing
             reservation.Bis = newBis;
             Target.UpdateReservation(reservation);
             var updatedReservation = Target.GetReservation(reservationsNummer);
-            Assert.Equals(updatedReservation.Bis, newBis);
+            Assert.AreEqual(updatedReservation.Bis, newBis);
 
         }
 
