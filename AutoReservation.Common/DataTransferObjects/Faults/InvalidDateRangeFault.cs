@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoReservation.Common.DataTransferObjects.Faults
 {
-    class InvalidDateRangeFault
+    public class InvalidDateRangeFault
     {
         public string Message { get; set; }
     }

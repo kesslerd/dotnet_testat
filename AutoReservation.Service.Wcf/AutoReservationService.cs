@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Diagnostics;
 using AutoReservation.Common.DataTransferObjects;
+using AutoReservation.Common.DataTransferObjects.Faults;
 using AutoReservation.Common.Interfaces;
 using AutoReservation.BusinessLayer;
 using System.Collections.Generic;
 using System.ServiceModel;
+using AutoReservation.BusinessLayer.Exceptions;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -29,7 +31,15 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             var kundeEntity = DtoConverter.ConvertToEntity(kunde);
-            kundeManager.Delete(kundeEntity);
+            try
+            {
+                kundeManager.Delete(kundeEntity);
+            }
+            catch (OptimisticConcurrencyException<KundeDto>)
+            {
+                throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Der Kunde wird momentan bearbeitet." });
+            }
+            
         }
 
         public KundeDto GetKunde(int id)
@@ -48,7 +58,14 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             var kundeEntity = DtoConverter.ConvertToEntity(kunde);
-            kundeManager.Update(kundeEntity);
+            try
+            {
+                kundeManager.Update(kundeEntity);
+            }
+            catch (OptimisticConcurrencyException<KundeDto>)
+            {
+                throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Der Kunde wird momentan bearbeitet." });
+            }
         }
 
         #endregion
@@ -73,7 +90,13 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             var autoEntity = DtoConverter.ConvertToEntity(auto);
-            autoManager.Update(autoEntity);
+            try { 
+                autoManager.Update(autoEntity);
+            }
+            catch (OptimisticConcurrencyException<AutoDto>)
+            {
+                throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Das Auto wird momentan bearbeitet." });
+            }
         }
 
         public void AddAuto(AutoDto auto)
@@ -87,7 +110,15 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             var autoEntity = DtoConverter.ConvertToEntity(auto);
-            autoManager.Delete(autoEntity);
+       
+            try
+            {
+                autoManager.Delete(autoEntity);
+            }
+            catch (OptimisticConcurrencyException<AutoDto>)
+            {
+                throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Das Auto wird momentan bearbeitet." });
+            }
         }
 
         #endregion
@@ -117,21 +148,55 @@ namespace AutoReservation.Service.Wcf
         {
             WriteActualMethod();
             var reservationEntity = DtoConverter.ConvertToEntity(reservation);
-            reservationManager.Update(reservationEntity);
+            try { 
+                reservationManager.Update(reservationEntity);
+            }
+            catch (OptimisticConcurrencyException<ReservationDto>)
+            {
+                throw new FaultException<DataManipulationFault> (new DataManipulationFault { Message = "Die Reservation wird momentan bearbeitet." });
+            }
+            catch (InvalidDateRangeException)
+            {
+                throw new FaultException<InvalidDateRangeFault> (new InvalidDateRangeFault { Message = "Ungültiger Datumsbereich eingegeben." });
+            }
+            catch (AutoUnavailableException)
+            {
+                throw new FaultException<AutoUnavailableFault> (new AutoUnavailableFault { Message = "Das gewählte Fahrzeug ist zur Zeit nicht verfügbar." });
+            }
         }
 
         public void AddReservation(ReservationDto reservation)
         {
             WriteActualMethod();
             var reservationEntity = DtoConverter.ConvertToEntity(reservation);
-            reservationManager.Add(reservationEntity);
+
+            try
+            {
+                reservationManager.Add(reservationEntity);
+            }
+            catch (InvalidDateRangeException)
+            {
+                throw new FaultException<InvalidDateRangeFault>(new InvalidDateRangeFault { Message = "Ungültiger Datumsbereich eingegeben." });
+            }
+            catch (AutoUnavailableException)
+            {
+                throw new FaultException<AutoUnavailableFault>(new AutoUnavailableFault { Message = "Das gewählte Fahrzeug ist zur Zeit nicht verfügbar." });
+            }
         }
 
         public void DeleteReservation(ReservationDto reservation)
         {
             WriteActualMethod();
             var reservationEntity = DtoConverter.ConvertToEntity(reservation);
-            reservationManager.Delete(reservationEntity);
+
+            try
+            {
+                reservationManager.Delete(reservationEntity);
+            }
+            catch (OptimisticConcurrencyException<ReservationDto>)
+            {
+                throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Die Reservation wird momentan bearbeitet." });
+            }
         }
 
         #endregion

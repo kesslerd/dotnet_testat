@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AutoReservation.Common.DataTransferObjects.Faults
 {
-    class DataManipulationFault
+    public class DataManipulationFault
     {
         public string Message { get; set; }
     }
