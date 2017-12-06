@@ -12,5 +12,7 @@ namespace AutoReservation.Common.DataTransferObjects.Faults
     {
         [DataMember]
         public string Message { get; set; }
+        [DataMember]
+        public string MessageDetails { get; set; }
     }
 }
