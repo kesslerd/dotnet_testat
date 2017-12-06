@@ -21,31 +21,34 @@ namespace AutoReservation.BusinessLayer.Testing
         [TestMethod]
         public void ScenarioOkay01Test()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Target.Add(new Reservation() { AutoId = 1, KundeId = 1, Von = new DateTime(2018, 01, 01), Bis = new DateTime(2018, 01, 02) });
         }
 
         [TestMethod]
         public void ScenarioOkay02Test()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Target.Add(new Reservation() { AutoId = 1, KundeId = 1, Von = new DateTime(2018, 01, 01, 0, 0, 0), Bis = new DateTime(2018, 01, 10, 23, 59, 59) });
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exceptions.InvalidDateRangeException))]
         public void ScenarioNotOkay01Test()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Target.Add(new Reservation() { AutoId = 1, KundeId = 1, Von = new DateTime(2018, 01, 02), Bis = new DateTime(2018, 01, 01) });
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exceptions.InvalidDateRangeException))]
         public void ScenarioNotOkay02Test()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Target.Add(new Reservation() { AutoId = 1, KundeId = 1, Von = new DateTime(2018, 01, 01), Bis = new DateTime(2018, 01, 01) });
         }
 
         [TestMethod]
+        [ExpectedException(typeof(Exceptions.InvalidDateRangeException))]
         public void ScenarioNotOkay03Test()
         {
-            Assert.Inconclusive("Test not implemented.");
+            Assert.Inconclusive("Drittes NotOkay-Szenarion finden");
         }
     }
 }
