@@ -9,9 +9,7 @@ namespace AutoReservation.Common.DataTransferObjects
 
         public KundeDto()
         {
-            Id = 1;
             Geburtsdatum = DateTime.Now;
-            RowVersion = new byte[] {1};
         }
 
         [DataMember]
