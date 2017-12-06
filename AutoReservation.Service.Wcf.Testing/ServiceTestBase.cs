@@ -284,27 +284,88 @@ namespace AutoReservation.Service.Wcf.Testing
         #region Insert / update invalid time range
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<InvalidDateRangeFault>))]
         public void InsertReservationWithInvalidDateRangeTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            DateTime von = new DateTime(2018, 1, 20);
+            DateTime bis = new DateTime(2018, 1, 19);
+
+            ReservationDto reservation = new ReservationDto
+            {
+                ReservationsNr = 200,
+                Von = von,
+                Bis = bis,
+                Auto = Target.GetAuto(1),
+                Kunde = Target.GetKunde(1)
+            };
+
+            Target.AddReservation(reservation);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<AutoUnavailableFault>))]
         public void InsertReservationWithAutoNotAvailableTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            DateTime von = new DateTime(2018, 1, 19);
+            DateTime bis = new DateTime(2018, 1, 20);
+
+            ReservationDto reservation1 = new ReservationDto
+            {
+                ReservationsNr = 200,
+                Von = von,
+                Bis = bis,
+                Auto = Target.GetAuto(1),
+                Kunde = Target.GetKunde(1)
+            };
+
+            ReservationDto reservation2 = new ReservationDto
+            {
+                ReservationsNr = 201,
+                Von = von,
+                Bis = bis,
+                Auto = Target.GetAuto(1),
+                Kunde = Target.GetKunde(2)
+            };
+
+            Target.AddReservation(reservation1);
+            Target.AddReservation(reservation2);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<InvalidDateRangeFault>))]
         public void UpdateReservationWithInvalidDateRangeTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            DateTime von = new DateTime(2018, 1, 20);
+            DateTime bis = new DateTime(2018, 1, 19);
+
+            ReservationDto reservation = Target.GetReservation(1);
+
+            reservation.Von = von;
+            reservation.Bis = bis;
+
+            Target.UpdateReservation(reservation);
         }
 
         [TestMethod]
+        [ExpectedException(typeof(FaultException<AutoUnavailableFault>))]
         public void UpdateReservationWithAutoNotAvailableTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            DateTime von = new DateTime(2018, 1, 19);
+            DateTime bis = new DateTime(2018, 1, 20);
+
+            ReservationDto reservation1 = Target.GetReservation(1);
+            ReservationDto reservation2 = Target.GetReservation(2);
+
+            reservation1.Von = von;
+            reservation1.Bis = bis;
+            reservation1.Auto = Target.GetAuto(1);
+
+            reservation2.Von = von;
+            reservation2.Bis = bis;
+            reservation2.Auto = Target.GetAuto(1);
+
+            Target.UpdateReservation(reservation1);
+            Target.UpdateReservation(reservation2);
         }
 
         #endregion
@@ -314,13 +375,21 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void CheckAvailabilityIsTrueTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            AutoDto auto = Target.GetAuto(1);
+            DateTime von = new DateTime(2021, 01, 01);
+            DateTime bis = new DateTime(2021, 01, 10);
+
+            Assert.IsTrue(Target.IsAutoAvailable(auto, von, bis));
         }
 
         [TestMethod]
         public void CheckAvailabilityIsFalseTest()
         {
-            Assert.Inconclusive("Test not implemented.");
+            AutoDto auto = Target.GetAuto(1);
+            DateTime von = new DateTime(2020, 01, 10);
+            DateTime bis = new DateTime(2020, 01, 20);
+
+            Assert.IsFalse(Target.IsAutoAvailable(auto, von, bis));
         }
 
         #endregion
