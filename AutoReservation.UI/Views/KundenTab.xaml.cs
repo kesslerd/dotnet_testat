@@ -22,12 +22,15 @@ namespace AutoReservation.UI.Views
     public partial class KundenTab : UserControl
     {
 
-        KundenViewModel ViewModel;
+        public KundenViewModel ViewModel { get; private set; }
 
         public KundenTab()
         {
             InitializeComponent();
             ViewModel = new KundenViewModel();
+            ViewModel.OnRequestCreateKunde += (caller, arg) => { (new Views.Kunde()).ShowDialog(); };
+            ViewModel.OnRequestEditKunde += (caller, id) => { (new Views.Kunde(id)).ShowDialog(); };
+
             DataContext = this;
         }
     }
