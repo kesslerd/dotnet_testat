@@ -1,2 +1,7 @@
-# disable automatic builds
-build: off
+image: Visual Studio 2017
+
+cache:
+        - packages -> **\packages.config
+
+before_build:
+        - nuget restore
