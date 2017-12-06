@@ -25,7 +25,7 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <Button Content="Edit"  CommandParameter="{Binding id}"/>
+                                <Button Content="Edit" Command="{Binding Path=DataContext.ViewModel.EditCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Id}"/>
                                 <Button Content="Delete" Command="{Binding Path=DataContext.ViewModel.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
                             </StackPanel>
                         </DataTemplate>
