@@ -25,7 +25,6 @@ namespace AutoReservation.Common.Interfaces
         void DeleteKunde(KundeDto kunde);
         #endregion
 
-        /**
         #region Auto
 
         [OperationContract]
@@ -46,6 +45,6 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         void DeleteAuto(AutoDto auto);
      
-        #endregion  **/
+        #endregion  
     }
 }
