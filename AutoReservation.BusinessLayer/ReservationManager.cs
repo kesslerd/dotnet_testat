@@ -111,10 +111,14 @@ namespace AutoReservation.BusinessLayer
         }
 
 
-        private IQueryable<Reservation> CreateAvailabilityQuery(int autoId, DateTime von, DateTime bis)
+        private IQueryable<Reservation> CreateAvailabilityQuery(int autoId, DateTime von, DateTime bis, AutoReservationContext context = null)
         {
-            using (var context = new AutoReservationContext())
-            { 
+
+            if (context == null)
+            {
+                context = new AutoReservationContext();
+            }
+            
                 return (from r in context.Reservationen
                              where (
                                  (von <= r.Von && bis >= r.Bis) ||
@@ -124,7 +128,7 @@ namespace AutoReservation.BusinessLayer
                              ) && autoId == r.AutoId
                              select r
                             );
-            }
+            
         }
 
         /// <summary>
@@ -137,7 +141,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationContext())
             {
-                var query = CreateAvailabilityQuery(reservation.AutoId, reservation.Von, reservation.Bis);
+                var query = CreateAvailabilityQuery(reservation.AutoId, reservation.Von, reservation.Bis, context);
 
                 if (ignoreOneself)
                 {
