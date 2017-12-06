@@ -48,11 +48,20 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UnitTest1.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AutoReservation.TestEnvironment\AutoReservation.TestEnvironment.csproj">
+      <Project>{0becfab3-1408-4005-a38a-6c4284c93658}</Project>
+      <Name>AutoReservation.TestEnvironment</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\AutoReservation.UI\AutoReservation.UI.csproj">
+      <Project>{faf391f2-e608-4a44-a836-33a3247d5b14}</Project>
+      <Name>AutoReservation.UI</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

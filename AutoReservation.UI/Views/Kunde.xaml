@@ -17,9 +17,9 @@
                 <ColumnDefinition Width="40*" />
                 <ColumnDefinition Width="60*" />
             </Grid.ColumnDefinitions>
-            <Label Content="Vorname" Grid.Row="0"/>
-            <Label Content="Nachname" Grid.Row="1"/>
-            <Label Content="Geburtsdatum" Grid.Row="2"/>
+            <Label Content="{StaticResource kunde_header_firstname}" Grid.Row="0"/>
+            <Label Content="{StaticResource kunde_header_lastname}" Grid.Row="1"/>
+            <Label Content="{StaticResource kunde_header_birthday}" Grid.Row="2"/>
 
             <TextBox Name="FirstNameInput" Text ="{Binding ViewModel.Vorname, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
             <TextBox Name="LastNameInput" Text ="{Binding ViewModel.Nachname, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
@@ -28,9 +28,9 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal">
-            <Button Content="Speichern" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
-            <Button Content="Abbrechen"  Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
-            <Button Content="Reload"  Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
+            <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
+            <Button Content="{StaticResource action_cancel}"  Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
+            <Button Content="{StaticResource action_reload}"  Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
 
         </StackPanel>
     </StackPanel>

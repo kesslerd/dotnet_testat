@@ -31,7 +31,7 @@ namespace AutoReservation.UI.Views
             ViewModel.OnRequestCreateKunde += (caller, arg) => { (new Views.Kunde()).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
             ViewModel.OnRequestEditKunde += (caller, id) => { (new Views.Kunde(id)).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
             ViewModel.OnRequestDelete += (caller, action) => {
-                var messageBoxResult = System.Windows.MessageBox.Show("Are you sure?", "Delete Confirmation", MessageBoxButton.YesNo);
+                var messageBoxResult = System.Windows.MessageBox.Show((string)Application.Current.FindResource("message_delete_confirm_title"), (string)Application.Current.FindResource("message_delete_confirm_message"), MessageBoxButton.YesNo);
                 action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
             };
             DataContext = this;
