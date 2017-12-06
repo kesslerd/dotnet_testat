@@ -26,6 +26,7 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         [FaultContract(typeof(DataManipulationFault))]
         void DeleteKunde(KundeDto kunde);
+      
         #endregion
 
         #region Auto
@@ -49,6 +50,7 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         [FaultContract(typeof(DataManipulationFault))]
         void DeleteAuto(AutoDto auto);
+
         #endregion
 
         #region Reservation

@@ -2,6 +2,7 @@
 using AutoReservation.TestEnvironment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
+using System.Linq;
 
 namespace AutoReservation.BusinessLayer.Testing
 {
@@ -23,6 +24,20 @@ namespace AutoReservation.BusinessLayer.Testing
         {
             Kunde k = Target.Find(1);
             Assert.AreEqual(k.Id, 1);
+        }
+
+        [TestMethod]
+        public void AddKundeTest()
+        {
+            String vorname = "TesterqGfdasafewqfnuogwfesdGWweff";
+
+            Kunde k = new Kunde() { Vorname = vorname, Nachname = "TesterNach", Geburtsdatum = DateTime.Now };
+            Target.Add(k);
+
+            var query = from cust in Target.List
+                    where cust.Vorname == vorname
+                    select cust;
+            Assert.AreEqual(query.Count(), 1);
         }
 
         [TestMethod]

@@ -4,52 +4,101 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoReservation.Common.DataTransferObjects;
+using System.Windows.Input;
+using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
     public class KundeViewModel : BaseViewModel
     {
-
-        private int _id;
+        private KundeDto kundeDto = new KundeDto();
 
         public int Id
         {
-            get { return _id; }
-            set { SetProperty(ref _id, value, nameof(Id)); }
+            get { return kundeDto.Id; }
+            set { kundeDto.Id = value; OnPropertyChanged(nameof(Id)); }
         }
-
-
-        private String _nachname;
 
         public String Nachname
         {
-            get { return _nachname; }
-            set { SetProperty(ref _nachname, value, nameof(Nachname)); }
+            get { return kundeDto.Nachname; }
+            set { kundeDto.Nachname = value; OnPropertyChanged(nameof(Nachname)); }
         }
-
-        private String _vorname;
 
         public String Vorname
         {
-            get { return _vorname; }
-            set { SetProperty(ref _vorname, value, nameof(Vorname)); }
+            get { return kundeDto.Vorname; }
+            set { kundeDto.Vorname = value; OnPropertyChanged(nameof(Vorname)); }
         }
 
-
-        private DateTime _geburtsdatum;
 
         public DateTime Geburtsdatum
         {
-            get { return _geburtsdatum; }
-            set { SetProperty(ref _geburtsdatum, value, nameof(Geburtsdatum)); }
+            get { return kundeDto.Geburtsdatum; }
+            set { kundeDto.Geburtsdatum = value; OnPropertyChanged(nameof(Geburtsdatum)); }
         }
 
-        private byte[] _rowVersion;
 
         public byte[] RowVerwion
         {
-            get { return _rowVersion; }
-            set { SetProperty(ref _rowVersion, value, nameof(RowVerwion)); }
+            get { return kundeDto.RowVersion; }
+            set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVerwion)); }
         }
+
+        public event EventHandler OnRequestClose;
+
+
+        #region commands
+        RelayCommand<object> _saveCommand;
+        public ICommand SaveCommand
+        {
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.executeSaveCommand()));
+        }
+
+        private void executeSaveCommand()
+        {
+            if(RowVerwion != null)
+            {
+                AutoReservationService.UpdateKunde(this.kundeDto);
+            }
+            else
+            {
+                AutoReservationService.AddKunde(this.kundeDto);
+            }
+            OnRequestClose?.Invoke(this, null);
+        }
+
+        RelayCommand<object> _cancelCommand;
+        public ICommand CancelCommand
+        {
+            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.executeCancelCommand()));
+        }
+
+        private void executeCancelCommand()
+        {
+            OnRequestClose?.Invoke(this, null);
+        }
+
+        RelayCommand<object> _reloadCommand;
+        public ICommand ReloadCommand
+        {
+            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.executeReloadCommand(), param => canExecuteReloadCommand()));
+        }
+
+        private void executeReloadCommand()
+        {
+            this.kundeDto = AutoReservationService.GetKunde(this.Id);
+            OnPropertyChanged(nameof(Nachname));
+            OnPropertyChanged(nameof(Vorname));
+            OnPropertyChanged(nameof(Geburtsdatum));
+            OnPropertyChanged(nameof(RowVerwion));
+        }
+
+        private bool canExecuteReloadCommand()
+        {
+            return RowVerwion != null;
+        }
+        #endregion
+
     }
 }

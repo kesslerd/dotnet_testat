@@ -6,24 +6,32 @@
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         mc:Ignorable="d"
         Title="Kunde" Height="0.11" Width="241.6" MinHeight="168.4" MinWidth="312.8">
+    <StackPanel>
+        <Grid Margin="10 10 10 10" MaxHeight="148">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="60*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Vorname" Grid.Row="0"/>
+            <Label Content="Nachname" Grid.Row="1"/>
+            <Label Content="Geburtsdatum" Grid.Row="2"/>
 
-    <Grid Margin="10 10 10 10" MaxHeight="148">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="10*" />
-            <RowDefinition Height="10*" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="40*" />
-            <ColumnDefinition Width="60*" />
-        </Grid.ColumnDefinitions>
-        <Label Content="Vorname" Grid.Row="0"/>
-        <Label Content="Nachname" Grid.Row="1"/>
-        <Label Content="Geburtsdatum" Grid.Row="2"/>
+            <TextBox Name="FirstNameInput" Text ="{Binding ViewModel.Vorname, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
+            <TextBox Name="LastNameInput" Text ="{Binding ViewModel.Nachname, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
+            <!-- TODO MAX Date today-->
+            <DatePicker Grid.Row="2" SelectedDate="{Binding Path=ViewModel.Geburtsdatum, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
 
-        <TextBox Name="FirstNameInput" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
-        <TextBox Name="LastNameInput" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
-        <DatePicker Grid.Row="2" Grid.Column="1" Padding="5" Margin="0 0 0 3"/>
+        </Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Speichern" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
+            <Button Content="Abbrechen"  Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
+            <Button Content="Reload"  Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
 
-    </Grid>
+        </StackPanel>
+    </StackPanel>
 </Window>
