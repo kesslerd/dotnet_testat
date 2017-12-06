@@ -10,46 +10,38 @@ namespace AutoReservation.UI.ViewModels
     public class KundeViewModel : BaseViewModel
     {
 
-        private int _id;
+        private KundeDto kundeDto;
 
         public int Id
         {
-            get { return _id; }
-            set { SetProperty(ref _id, value, nameof(Id)); }
+            get { return kundeDto.Id; }
+            set { kundeDto.Id = value; OnPropertyChanged(nameof(Id)); }
         }
-
-
-        private String _nachname;
 
         public String Nachname
         {
-            get { return _nachname; }
-            set { SetProperty(ref _nachname, value, nameof(Nachname)); }
+            get { return kundeDto.Nachname; }
+            set { kundeDto.Nachname = value; OnPropertyChanged(nameof(Nachname)); }
         }
-
-        private String _vorname;
 
         public String Vorname
         {
-            get { return _vorname; }
-            set { SetProperty(ref _vorname, value, nameof(Vorname)); }
+            get { return kundeDto.Vorname; }
+            set { kundeDto.Vorname = value; OnPropertyChanged(nameof(Vorname)); }
         }
 
-
-        private DateTime _geburtsdatum;
 
         public DateTime Geburtsdatum
         {
-            get { return _geburtsdatum; }
-            set { SetProperty(ref _geburtsdatum, value, nameof(Geburtsdatum)); }
+            get { return kundeDto.Geburtsdatum; }
+            set { kundeDto.Geburtsdatum = value; OnPropertyChanged(nameof(Geburtsdatum)); }
         }
 
-        private byte[] _rowVersion;
 
         public byte[] RowVerwion
         {
-            get { return _rowVersion; }
-            set { SetProperty(ref _rowVersion, value, nameof(RowVerwion)); }
+            get { return kundeDto.RowVersion; }
+            set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVerwion)); }
         }
     }
 }
