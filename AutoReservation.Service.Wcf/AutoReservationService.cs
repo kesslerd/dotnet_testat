@@ -143,7 +143,7 @@ namespace AutoReservation.Service.Wcf
             WriteActualMethod();
             return DtoConverter.ConvertToDtos(reservationManager.List);
         }
-
+        
         public void UpdateReservation(ReservationDto reservation)
         {
             WriteActualMethod();

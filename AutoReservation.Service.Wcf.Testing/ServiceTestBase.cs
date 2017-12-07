@@ -49,7 +49,6 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void GetAutoByIdTest()
         {
-            Assert.Inconclusive("Test not implemented.");
             int id = 1;
             var auto = Target.GetAuto(id);
             Assert.AreEqual(id, auto.Id);
@@ -101,9 +100,9 @@ namespace AutoReservation.Service.Wcf.Testing
         [TestMethod]
         public void InsertAutoTest()
         {
-            var auto = new AutoDto
+            AutoDto auto = new AutoDto
             {
-                Id = 200,
+                Id = 4,
                 Marke = "Audi",
                 Tagestarif = 120,
                 AutoKlasse = AutoKlasse.Mittelklasse,
@@ -114,15 +113,17 @@ namespace AutoReservation.Service.Wcf.Testing
 
             var foundAuto = Target.GetAuto(auto.Id);
 
-            Assert.AreEqual(auto, foundAuto);
+            Assert.AreEqual(auto.Id, foundAuto.Id);
         }
 
+        // Wichtig: ID kann nicht so gesetzt werden, wird fix von System gesetzt
         [TestMethod]
         public void InsertKundeTest()
         {
-            var kunde = new KundeDto
+            var kundeId = 5;
+            KundeDto kunde = new KundeDto
             {
-                Id = 200,
+                Id = kundeId,
                 Nachname = "Bächli",
                 Vorname = "Patrick Silvio",
                 Geburtsdatum = new DateTime(1994, 06, 21)
@@ -132,15 +133,15 @@ namespace AutoReservation.Service.Wcf.Testing
 
             var foundKunde = Target.GetKunde(kunde.Id);
 
-            Assert.AreEqual(kunde, foundKunde);
+            Assert.AreEqual(kunde.Id, foundKunde.Id);
         }
 
         [TestMethod]
         public void InsertReservationTest()
         {
-            var reservation = new ReservationDto
+            ReservationDto reservation = new ReservationDto
             {
-                ReservationsNr = 200,
+                ReservationsNr = 4,
                 Von = new DateTime(2018, 01, 01),
                 Bis = new DateTime(2018, 01, 02),
                 Auto = Target.GetAuto(1),
@@ -151,7 +152,7 @@ namespace AutoReservation.Service.Wcf.Testing
 
             var foundReservation = Target.GetReservation(reservation.ReservationsNr);
 
-            Assert.AreEqual(reservation, foundReservation);
+            Assert.AreEqual(reservation.ReservationsNr, foundReservation.ReservationsNr);
         }
 
         #endregion
@@ -182,7 +183,8 @@ namespace AutoReservation.Service.Wcf.Testing
         public void DeleteReservationTest()
         {
             int id = 1;
-            Target.DeleteReservation(Target.GetReservation(id));
+            var reservation = Target.GetReservation(id);
+            Target.DeleteReservation(reservation);
             Assert.IsNull(Target.GetReservation(id));
         }
 

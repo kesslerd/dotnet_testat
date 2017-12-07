@@ -24,12 +24,12 @@ namespace AutoReservation.BusinessLayer
                 }
             }
         }
-
+        
         public Reservation Find(int id)
         {
             using (var context = new AutoReservationContext())
             {
-                return context.Reservationen.Find(id);
+                return context.Reservationen.Include(res => res.Auto).Include(res => res.Kunde).FirstOrDefault(res => res.ReservationsNr == id);
             }
         }
 
