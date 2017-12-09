@@ -7,6 +7,7 @@ using AutoReservation.BusinessLayer;
 using System.Collections.Generic;
 using System.ServiceModel;
 using AutoReservation.BusinessLayer.Exceptions;
+using AutoReservation.Dal.Entities;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -35,7 +36,7 @@ namespace AutoReservation.Service.Wcf
             {
                 kundeManager.Delete(kundeEntity);
             }
-            catch (OptimisticConcurrencyException<KundeDto>)
+            catch (OptimisticConcurrencyException<Kunde>)
             {
                 throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Der Kunde wird momentan bearbeitet." });
             }
@@ -62,7 +63,7 @@ namespace AutoReservation.Service.Wcf
             {
                 kundeManager.Update(kundeEntity);
             }
-            catch (OptimisticConcurrencyException<KundeDto>)
+            catch (OptimisticConcurrencyException<Kunde>)
             {
                 throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Der Kunde wird momentan bearbeitet." });
             }
@@ -93,11 +94,12 @@ namespace AutoReservation.Service.Wcf
             try { 
                 autoManager.Update(autoEntity);
             }
-            catch (OptimisticConcurrencyException<AutoDto>)
+            catch (OptimisticConcurrencyException<Auto>)
             {
                 throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Das Auto wird momentan bearbeitet." });
             }
         }
+
 
         public void AddAuto(AutoDto auto)
         {
@@ -115,7 +117,7 @@ namespace AutoReservation.Service.Wcf
             {
                 autoManager.Delete(autoEntity);
             }
-            catch (OptimisticConcurrencyException<AutoDto>)
+            catch (OptimisticConcurrencyException<Auto>)
             {
                 throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Das Auto wird momentan bearbeitet." });
             }
@@ -151,7 +153,7 @@ namespace AutoReservation.Service.Wcf
             try { 
                 reservationManager.Update(reservationEntity);
             }
-            catch (OptimisticConcurrencyException<ReservationDto>)
+            catch (OptimisticConcurrencyException<Reservation>)
             {
                 throw new FaultException<DataManipulationFault> (new DataManipulationFault { Message = "Die Reservation wird momentan bearbeitet." });
             }
@@ -193,7 +195,7 @@ namespace AutoReservation.Service.Wcf
             {
                 reservationManager.Delete(reservationEntity);
             }
-            catch (OptimisticConcurrencyException<ReservationDto>)
+            catch (OptimisticConcurrencyException<Reservation>)
             {
                 throw new FaultException<DataManipulationFault>(new DataManipulationFault { Message = "Die Reservation wird momentan bearbeitet." });
             }
