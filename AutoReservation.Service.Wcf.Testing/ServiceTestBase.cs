@@ -224,7 +224,7 @@ namespace AutoReservation.Service.Wcf.Testing
         public void UpdateReservationTest()
         {
             int reservationsNummer = 1;
-            DateTime newBis = new DateTime(2018, 12, 31);
+            DateTime newBis = new DateTime(2020, 01, 20);
             var reservation = Target.GetReservation(reservationsNummer);
             reservation.Bis = newBis;
             Target.UpdateReservation(reservation);
