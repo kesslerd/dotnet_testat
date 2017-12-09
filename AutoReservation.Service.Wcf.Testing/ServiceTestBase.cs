@@ -269,8 +269,8 @@ namespace AutoReservation.Service.Wcf.Testing
         [ExpectedException(typeof(FaultException<DataManipulationFault>))]
         public void UpdateReservationWithOptimisticConcurrencyTest()
         {
-            DateTime dt1 = new DateTime(2018, 3, 12);
-            DateTime dt2 = new DateTime(2018, 4, 12);
+            DateTime dt1 = new DateTime(2020, 01, 21);
+            DateTime dt2 = new DateTime(2020, 01, 19);
 
             ReservationDto r1 = Target.GetReservation(1);
             ReservationDto r2 = Target.GetReservation(1);
