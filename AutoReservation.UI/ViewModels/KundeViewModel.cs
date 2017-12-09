@@ -6,12 +6,23 @@ using System.Threading.Tasks;
 using AutoReservation.Common.DataTransferObjects;
 using System.Windows.Input;
 using static AutoReservation.UI.Service.Service;
+using System.ServiceModel;
+using AutoReservation.Common.DataTransferObjects.Faults;
 
 namespace AutoReservation.UI.ViewModels
 {
     public class KundeViewModel : BaseViewModel
     {
         private KundeDto kundeDto = new KundeDto();
+
+        public KundeViewModel(int id = -1)
+        {
+            if (id != -1)
+            {
+                this.Id = id;
+                ReloadCommand?.Execute(null);
+            }
+        }
 
         public int Id
         {
@@ -47,7 +58,6 @@ namespace AutoReservation.UI.ViewModels
 
         public event EventHandler OnRequestClose;
 
-
         #region commands
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
@@ -57,15 +67,21 @@ namespace AutoReservation.UI.ViewModels
 
         private void executeSaveCommand()
         {
-            if(RowVerwion != null)
-            {
-                AutoReservationService.UpdateKunde(this.kundeDto);
+            try { 
+                if(RowVerwion != null)
+                {
+                    AutoReservationService.UpdateKunde(this.kundeDto);
+                }
+                else
+                {
+                    AutoReservationService.AddKunde(this.kundeDto);
+                }
+                OnRequestClose?.Invoke(this, null);
             }
-            else
+            catch (FaultException<DataManipulationFault> e)
             {
-                AutoReservationService.AddKunde(this.kundeDto);
+
             }
-            OnRequestClose?.Invoke(this, null);
         }
 
         RelayCommand<object> _cancelCommand;

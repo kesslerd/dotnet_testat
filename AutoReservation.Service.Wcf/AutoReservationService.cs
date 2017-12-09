@@ -155,9 +155,9 @@ namespace AutoReservation.Service.Wcf
             {
                 throw new FaultException<DataManipulationFault> (new DataManipulationFault { Message = "Die Reservation wird momentan bearbeitet." });
             }
-            catch (InvalidDateRangeException)
+            catch (InvalidDateRangeException e)
             {
-                throw new FaultException<InvalidDateRangeFault> (new InvalidDateRangeFault { Message = "Ungültiger Datumsbereich eingegeben." });
+                throw new FaultException<InvalidDateRangeFault> (new InvalidDateRangeFault { Message = "Ungültiger Datumsbereich eingegeben.", MessageDetails = e.Message });
             }
             catch (AutoUnavailableException)
             {
@@ -174,9 +174,9 @@ namespace AutoReservation.Service.Wcf
             {
                 reservationManager.Add(reservationEntity);
             }
-            catch (InvalidDateRangeException)
+            catch (InvalidDateRangeException e)
             {
-                throw new FaultException<InvalidDateRangeFault>(new InvalidDateRangeFault { Message = "Ungültiger Datumsbereich eingegeben." });
+                throw new FaultException<InvalidDateRangeFault>(new InvalidDateRangeFault { Message = "Ungültiger Datumsbereich eingegeben.", MessageDetails = e.Message });
             }
             catch (AutoUnavailableException)
             {

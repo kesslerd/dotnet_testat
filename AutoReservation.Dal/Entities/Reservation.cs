@@ -8,15 +8,20 @@ namespace AutoReservation.Dal.Entities
     {
         [Key]
         public int ReservationsNr { get; set; }
+
+        [ForeignKey("Auto")]
         public int AutoId { get; set; }
+        [ForeignKey("Kunde")]
         public int KundeId { get; set; }
+
         public DateTime Von { get; set; }
         public DateTime Bis { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
 
-        public virtual Kunde Kunde { get; set; }
         public virtual Auto Auto { get; set; }
+        public virtual Kunde Kunde { get; set; }
 
     }
 }

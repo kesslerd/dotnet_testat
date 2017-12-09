@@ -23,12 +23,11 @@ namespace AutoReservation.UI.Views
     {
         public KundeViewModel ViewModel { get; set; }
 
-
-        public Kunde()
+        public Kunde(int kundeId = -1)
         {
             InitializeComponent();
 
-            ViewModel = new KundeViewModel();
+            ViewModel = new KundeViewModel(kundeId);
             ViewModel.OnRequestClose += (s, e) => this.Close();
             DataContext = this;
         }

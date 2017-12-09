@@ -9,10 +9,13 @@ namespace AutoReservation.Dal.Entities
     {
         [Key]
         public int Id { get; set; }
+
+        [Required]
         public string Marke { get; set; }
+        public int Tagestarif { get; set; }
+
         [Timestamp]
         public byte[] RowVersion { get; set; }
-        public int Tagestarif { get; set; }
         
         public virtual List<Reservation> Reservationen { get; set; }
     }
