@@ -16,6 +16,7 @@ namespace AutoReservation.Common.DataTransferObjects
         public AutoDto Auto { get; set; }
         [DataMember]
         public KundeDto Kunde { get; set; }
+        [DataMember]
         public byte[] RowVersion { get; set; }
 
         public override string ToString()
