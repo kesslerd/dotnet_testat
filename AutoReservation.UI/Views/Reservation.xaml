@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         xmlns:viewmodels="clr-namespace:AutoReservation.UI.ViewModels"
         mc:Ignorable="d"
-        Title="Reservation" Height="0.11" Width="241.6" MinHeight="220" MinWidth="312.8">
+        Title="Reservation" Height="225" Width="360" MinHeight="225" MinWidth="360">
     <StackPanel>
         <Grid Margin="10 10 10 10" MaxHeight="148">
             <Grid.RowDefinitions>
@@ -24,8 +24,34 @@
             <Label Content="Von" Grid.Row="2" VerticalAlignment="Center"/>
             <Label Content="Bis" Grid.Row="3" VerticalAlignment="Center"/>
 
-            <TextBox Name="KundeInput" Text ="{Binding ViewModel.Kunde, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
-            <TextBox Name="AutoInput" Text ="{Binding ViewModel.Auto, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
+            <ComboBox Name="KundeInput" ItemsSource="{Binding ViewModel.Kunden}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} {1}">
+                                    <Binding Path="Vorname"/>
+                                    <Binding Path="Nachname"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
+            <ComboBox Name="AutoInput" ItemsSource="{Binding ViewModel.Autos}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3">
+                <ComboBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="{}{0} ({1})">
+                                    <Binding Path="Marke"/>
+                                    <Binding Path="AutoKlasse"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                        </TextBlock>
+                    </DataTemplate>
+                </ComboBox.ItemTemplate>
+            </ComboBox>
             <!-- TODO Min Date today-->
             <DatePicker Grid.Row="2" SelectedDate="{Binding Path=ViewModel.Von, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
             <DatePicker Grid.Row="3" SelectedDate="{Binding Path=ViewModel.Bis, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />

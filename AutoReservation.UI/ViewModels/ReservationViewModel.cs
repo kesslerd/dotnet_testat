@@ -22,7 +22,13 @@ namespace AutoReservation.UI.ViewModels
                 this.ReservationsNr = reservationsNr;
                 ReloadCommand?.Execute(null);
             }
+
+            Kunden = AutoReservationService.GetKunden();
+            Autos = AutoReservationService.GetAutos();
         }
+
+        public List<KundeDto> Kunden { get; private set; }
+        public List<AutoDto> Autos { get; private set; }
 
         public int ReservationsNr
         {
