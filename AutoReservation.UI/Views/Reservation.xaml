@@ -1,0 +1,39 @@
+﻿<Window x:Class="AutoReservation.UI.Views.Reservation"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoReservation.UI.Views"
+        xmlns:viewmodels="clr-namespace:AutoReservation.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="Reservation" Height="0.11" Width="241.6" MinHeight="220" MinWidth="312.8">
+    <StackPanel>
+        <Grid Margin="10 10 10 10" MaxHeight="148">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="60*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="Kunde" Grid.Row="0"/>
+            <Label Content="Auto" Grid.Row="1"/>
+            <Label Content="Von" Grid.Row="2" VerticalAlignment="Center"/>
+            <Label Content="Bis" Grid.Row="3" VerticalAlignment="Center"/>
+
+            <TextBox Name="KundeInput" Text ="{Binding ViewModel.Kunde, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
+            <TextBox Name="AutoInput" Text ="{Binding ViewModel.Auto, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
+            <!-- TODO Min Date today-->
+            <DatePicker Grid.Row="2" SelectedDate="{Binding Path=ViewModel.Von, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
+            <DatePicker Grid.Row="3" SelectedDate="{Binding Path=ViewModel.Bis, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
+        </Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="Speichern" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
+            <Button Content="Abbrechen" Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
+            <Button Content="Reload" Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
+        </StackPanel>
+    </StackPanel>
+</Window>
