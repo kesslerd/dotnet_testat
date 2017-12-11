@@ -24,12 +24,12 @@ namespace AutoReservation.BusinessLayer
                 }
             }
         }
-
+        
         public Reservation Find(int id)
         {
             using (var context = new AutoReservationContext())
             {
-                return context.Reservationen.Find(id);
+                return context.Reservationen.Include(res => res.Auto).Include(res => res.Kunde).FirstOrDefault(res => res.ReservationsNr == id);
             }
         }
 
@@ -71,8 +71,7 @@ namespace AutoReservation.BusinessLayer
             {
                 try
                 {
-                    context.Entry(reservation).State = EntityState.Deleted;
-                    context.Reservationen.Remove(reservation);
+                    context.Entry(reservation).State = EntityState.Deleted;               
                     context.SaveChanges();
                 }
                 catch (DbUpdateConcurrencyException)

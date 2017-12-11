@@ -48,7 +48,7 @@ namespace AutoReservation.BusinessLayer.Testing
         [ExpectedException(typeof(Exceptions.InvalidDateRangeException))]
         public void ScenarioNotOkay03Test()
         {
-            Assert.Inconclusive("Drittes NotOkay-Szenarion finden");
+            Target.Add(new Reservation() { AutoId = 1, KundeId = 1, Von = new DateTime(2018, 01, 01), Bis = new DateTime(2017, 01, 02) });
         }
     }
 }
