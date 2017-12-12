@@ -11,7 +11,7 @@ using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
-    class AutosViewModel : BaseViewModel
+    public class AutosViewModel : BaseViewModel
     {
 
         public AutosViewModel()

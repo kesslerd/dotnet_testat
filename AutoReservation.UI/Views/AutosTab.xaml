@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AutoReservation.UI.Views"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" 
-             d:DataContext="{d:DesignInstance local:KundenTab,IsDesignTimeCreatable=True}" >
+             d:DataContext="{d:DesignInstance local:AutosTab,IsDesignTimeCreatable=True}" >
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
@@ -14,12 +14,13 @@
         </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   IsReadOnly="True"
-                  ItemsSource="{Binding ViewModel.Kunden}">
+                  ItemsSource="{Binding ViewModel.Autos}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="{StaticResource kunde_header_firstname}" Binding="{Binding Vorname}" />
-                <DataGridTextColumn Header="{StaticResource kunde_header_lastname}" Binding="{Binding Nachname}" />
-                <DataGridTextColumn Header="{StaticResource kunde_header_birthday}" Binding="{Binding Geburtsdatum, StringFormat=d}" />
+                <DataGridTextColumn Header="{StaticResource auto_header_marke}" Binding="{Binding Marke}" />
+                <DataGridTextColumn Header="{StaticResource auto_header_basistarif}" Binding="{Binding Basistarif, StringFormat=d}" />
+                <DataGridTextColumn Header="{StaticResource auto_header_tagestarif}" Binding="{Binding Tagestarif, StringFormat=d}" />
+                <DataGridTextColumn Header="{StaticResource auto_header_autoklasse}" Binding="{Binding AutoKlasse}" />
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

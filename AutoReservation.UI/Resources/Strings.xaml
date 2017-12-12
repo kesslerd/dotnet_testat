@@ -6,6 +6,10 @@
     <system:String x:Key="kunde_header_firstname">Vorname</system:String>
     <system:String x:Key="kunde_header_lastname">Nachname</system:String>
     <system:String x:Key="kunde_header_birthday">Geburtsdatum</system:String>
+    <system:String x:Key="auto_header_marke">Marke</system:String>
+    <system:String x:Key="auto_header_basistarif">Basistarif</system:String>
+    <system:String x:Key="auto_header_tagestarif">Tagestarif</system:String>
+    <system:String x:Key="auto_header_autoklasse">Autoklasse</system:String>
     <system:String x:Key="action_add">Hinzufügen</system:String>
     <system:String x:Key="action_delete">Entfernen</system:String>
     <system:String x:Key="action_save">Speichern</system:String>
