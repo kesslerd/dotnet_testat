@@ -35,6 +35,7 @@ namespace AutoReservation.UI.Views
                 var messageBoxResult = System.Windows.MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_title"), ((string)Application.Current.TryFindResource("message_delete_confirm_message")), MessageBoxButton.YesNo);
                 action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
             };
+            DataContext = this;
         }
     }
 }
