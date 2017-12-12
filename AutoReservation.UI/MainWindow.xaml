@@ -13,7 +13,7 @@
                 <localViews:KundenTab/>
             </TabItem>
             <TabItem Header="Autos">
-
+                <localViews:AutosTab/>
             </TabItem>
             <TabItem Header="Reservationen">
 

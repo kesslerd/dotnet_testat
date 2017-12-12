@@ -29,7 +29,7 @@ namespace AutoReservation.UI.Views
             InitializeComponent();
             ViewModel = new AutosViewModel();
             ViewModel.OnRequestCreateAuto += (caller, arg) => { (new Views.Auto()).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
-            ViewModel.OnRequestEditAuto += (caller, id) => { (new Views.Auto()).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
+            ViewModel.OnRequestEditAuto += (caller, id) => { (new Views.Auto(id)).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
             ViewModel.OnRequestDeleteAuto += (caller, action) =>
             {
                 var messageBoxResult = System.Windows.MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_title"), ((string)Application.Current.TryFindResource("message_delete_confirm_message")), MessageBoxButton.YesNo);

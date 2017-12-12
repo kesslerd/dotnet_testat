@@ -2,6 +2,7 @@
 using AutoReservation.Common.DataTransferObjects.Faults;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.ServiceModel;
 using System.Text;

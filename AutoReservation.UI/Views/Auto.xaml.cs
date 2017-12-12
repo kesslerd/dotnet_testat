@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AutoReservation.UI.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +19,16 @@ namespace AutoReservation.UI.Views
     /// <summary>
     /// Interaction logic for Auto.xaml
     /// </summary>
-    public partial class Auto : Page
+    public partial class Auto : Window
     {
-        public Auto()
+        public AutoViewModel ViewModel { get; private set; }
+
+        public Auto(int autoId = -1)
         {
             InitializeComponent();
+            ViewModel = new AutoViewModel(autoId);
+            ViewModel.OnRequestClose += (s, e) => this.Close();
+            DataContext = this;
         }
     }
 }
