@@ -11,7 +11,7 @@ using System.ServiceModel;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class ReservationenViewModel : BaseViewModel
+    public class ReservationenViewModel : BaseTabViewModel<ReservationDto>
     {
         public ReservationenViewModel()
         {
@@ -32,47 +32,12 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public event EventHandler<int> OnRequestEdit;
-        public event EventHandler<object> OnRequestCreate;
-        public event EventHandler<EventHandler<bool>> OnRequestDelete;
-        public event EventHandler<object> OnRequestDeleteFailed;
-
-        #region commands
-
-        RelayCommand<object> _refreshCommand;
-        public ICommand RefreshCommand
-        {
-            get => _refreshCommand ?? (_refreshCommand = new RelayCommand<object>(param => this.ExecuteRefreshCommand()));
-        }
-
-        private void ExecuteRefreshCommand()
+        protected override void ExecuteRefreshCommand()
         {
             Reservationen = AutoReservationService.GetReservations();
         }
 
-        RelayCommand<object> _addCommand;
-        public ICommand AddCommand
-        {
-            get => _addCommand ?? (_addCommand = new RelayCommand<object>(param => this.ExecuteAddCommand()));
-        }
-
-        private void ExecuteAddCommand()
-        {
-            OnRequestCreate?.Invoke(this, null);
-        }
-
-        RelayCommand<ReservationDto> _deleteCommand;
-        public ICommand DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new RelayCommand<ReservationDto>(param => this.ExecuteDeleteCommand(param)));
-        }
-
-        private void ExecuteDeleteCommand(ReservationDto reservation)
-        {
-            OnRequestDelete?.Invoke(this, (caller, ok) => { if (ok) Delete(reservation); });
-        }
-
-        private void Delete(ReservationDto reservation)
+        protected override void Delete(ReservationDto reservation)
         {
             try
             {
@@ -80,23 +45,9 @@ namespace AutoReservation.UI.ViewModels
             }
             catch (FaultException<DataManipulationFault>)
             {
-                OnRequestDeleteFailed?.Invoke(this, null);
+                OnRequestDeleteFailed();
             }
-
             RefreshCommand.Execute(null);
         }
-
-        RelayCommand<int> _editCommand;
-        public ICommand EditCommand
-        {
-            get => _editCommand ?? (_editCommand = new RelayCommand<int>(param => this.ExecuteEditCommand(param)));
-        }
-
-        private void ExecuteEditCommand(int id)
-        {
-            OnRequestEdit?.Invoke(this, id);
-        }
-
-        #endregion
     }
 }
