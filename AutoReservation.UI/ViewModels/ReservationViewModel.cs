@@ -17,18 +17,32 @@ namespace AutoReservation.UI.ViewModels
 
         public ReservationViewModel(int reservationsNr = -1)
         {
+            Kunden = AutoReservationService.GetKunden();
+            Autos = AutoReservationService.GetAutos();
+
             if (reservationsNr != -1)
             {
                 this.ReservationsNr = reservationsNr;
                 ReloadCommand?.Execute(null);
             }
-
-            Kunden = AutoReservationService.GetKunden();
-            Autos = AutoReservationService.GetAutos();
         }
 
         public List<KundeDto> Kunden { get; private set; }
         public List<AutoDto> Autos { get; private set; }
+
+        private KundeDto _selectedKunde;
+        public KundeDto SelectedKunde
+        {
+            get { return _selectedKunde; }
+            set { _selectedKunde = value; OnPropertyChanged(nameof(SelectedKunde)); }
+        }
+
+        private AutoDto _selectedAuto;
+        public AutoDto SelectedAuto
+        {
+            get { return _selectedAuto; }
+            set { _selectedAuto = value; OnPropertyChanged(nameof(SelectedAuto)); }
+        }
 
         public int ReservationsNr
         {
@@ -116,7 +130,13 @@ namespace AutoReservation.UI.ViewModels
         private void ExecuteReloadCommand()
         {
             this.reservationDto = AutoReservationService.GetReservation(this.ReservationsNr);
+
+            SelectedKunde = Kunden.FirstOrDefault(kunde => kunde.Id == reservationDto.Kunde.Id);
+            SelectedAuto = Autos.FirstOrDefault(auto => auto.Id == reservationDto.Auto.Id);
+
             OnPropertyChanged(nameof(ReservationsNr));
+            OnPropertyChanged(nameof(SelectedKunde));
+            OnPropertyChanged(nameof(SelectedAuto));
             OnPropertyChanged(nameof(Von));
             OnPropertyChanged(nameof(Bis));
             OnPropertyChanged(nameof(RowVersion));

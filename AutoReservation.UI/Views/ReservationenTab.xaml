@@ -42,6 +42,16 @@
                 </DataGridTemplateColumn>
                 <DataGridTextColumn Header="{StaticResource reservation_header_von}" Binding="{Binding Von}"/>
                 <DataGridTextColumn Header="{StaticResource reservation_header_bis}" Binding="{Binding Bis}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <Button Content="{StaticResource action_edit}" Command="{Binding Path=DataContext.ViewModel.EditCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding ReservationsNr}"/>
+                                <Button Content="{StaticResource action_delete}" Command="{Binding Path=DataContext.ViewModel.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
 
         </DataGrid>
