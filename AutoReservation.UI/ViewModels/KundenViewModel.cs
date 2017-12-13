@@ -33,8 +33,6 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        #region commands
-
         protected override void ExecuteRefreshCommand()
         {
             Kunden = AutoReservationService.GetKunden();
@@ -52,7 +50,5 @@ namespace AutoReservation.UI.ViewModels
             }
             RefreshCommand.Execute(null);
         }
-
-        #endregion
     }
 }
