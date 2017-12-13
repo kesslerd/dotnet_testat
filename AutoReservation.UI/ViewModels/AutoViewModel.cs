@@ -84,6 +84,11 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
+        public bool IsEdit
+        {
+            get => RowVersion == null;
+        }
+
         public event EventHandler OnRequestClose;
         public event EventHandler OnSaveError;
 
