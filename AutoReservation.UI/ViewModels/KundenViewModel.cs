@@ -14,11 +14,6 @@ namespace AutoReservation.UI.ViewModels
 {
     public class KundenViewModel : BaseTabViewModel<KundeDto>
     {
-        public KundenViewModel()
-        {
-            ExecuteRefreshCommand();
-        }
-
         private List<KundeDto> _kunden;
         public List<KundeDto> Kunden
         {

@@ -9,6 +9,8 @@ namespace AutoReservation.UI.ViewModels
 {
     public abstract class BaseTabViewModel<T> : BaseViewModel
     {
+        public BaseTabViewModel() => ExecuteRefreshCommand();
+
         public event EventHandler<object> OnRequestCreate;
         public event EventHandler<int> OnRequestEdit;
         public event EventHandler<EventHandler<bool>> OnRequestDelete;

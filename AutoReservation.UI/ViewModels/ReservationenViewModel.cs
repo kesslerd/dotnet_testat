@@ -13,11 +13,6 @@ namespace AutoReservation.UI.ViewModels
 {
     public class ReservationenViewModel : BaseTabViewModel<ReservationDto>
     {
-        public ReservationenViewModel()
-        {
-            ExecuteRefreshCommand();
-        }
-
         private List<ReservationDto> _reservationen;
         public List<ReservationDto> Reservationen
         {
