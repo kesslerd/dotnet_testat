@@ -4,7 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
-        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance local:Kunde,IsDesignTimeCreatable=True}"
+
+    mc:Ignorable="d"
         Title="Kunde" Height="0.11" Width="241.6" MinHeight="168.4" MinWidth="312.8">
     <StackPanel>
         <Grid Margin="10 10 10 10" MaxHeight="148">
@@ -30,8 +32,7 @@
         <StackPanel Orientation="Horizontal">
             <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
             <Button Content="{StaticResource action_cancel}"  Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
-            <Button Content="{StaticResource action_reload}"  Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
-
+            <Button Content="{StaticResource action_reload}"  Margin="10" Command='{Binding ViewModel.ReloadCommand}' IsEnabled="{Binding ViewModel.CanExecuteReloadCommand}"/>
         </StackPanel>
     </StackPanel>
 </Window>

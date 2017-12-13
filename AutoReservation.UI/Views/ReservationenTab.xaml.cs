@@ -11,30 +11,30 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace AutoReservation.UI.Views
 {
     /// <summary>
-    /// Interaction logic for KundenTab.xaml
+    /// Interaction logic for ReservationTab.xaml
     /// </summary>
-    public partial class KundenTab : UserControl
+    public partial class ReservationenTab : UserControl
     {
+        public ReservationenViewModel ViewModel { get; private set; }
 
-        public KundenViewModel ViewModel { get; private set; }
-
-        public KundenTab()
+        public ReservationenTab()
         {
             InitializeComponent();
-            ViewModel = new KundenViewModel();
-            ViewModel.OnRequestCreateKunde += (caller, arg) => { (new Views.Kunde()).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
-            ViewModel.OnRequestEditKunde += (caller, id) => { (new Views.Kunde(id)).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
+
+            ViewModel = new ReservationenViewModel();
+            ViewModel.OnRequestCreate += (caller, arg) => { (new Views.Reservation()).ShowDialog(); };
+            ViewModel.OnRequestEdit += (caller, reservationsNr) => { (new Views.Reservation(reservationsNr)).ShowDialog(); };
             ViewModel.OnRequestDelete += (caller, action) => {
                 var messageBoxResult = MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_message"), (string)Application.Current.TryFindResource("message_delete_confirm_title"), MessageBoxButton.YesNo);
                 action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
             };
-            ViewModel.OnDeleteKundeFailed += (caller, arg) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_delete_kunde_message"), (string)Application.Current.TryFindResource("message_error_delete_kunde_title"), MessageBoxButton.OK, MessageBoxImage.Error);
+            ViewModel.OnRequestDeleteFailed += (caller, arg) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_delete_reservation_message"), (string)Application.Current.TryFindResource("message_error_delete_reservation_title"), MessageBoxButton.OK, MessageBoxImage.Error);
+
             DataContext = this;
         }
     }
