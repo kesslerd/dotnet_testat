@@ -9,8 +9,8 @@
              d:DataContext="{d:DesignInstance local:KundenTab,IsDesignTimeCreatable=True}" >
     <StackPanel>
         <StackPanel Orientation="Horizontal">
-            <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
-            <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
+            <Button Content="{StaticResource action_add}"  Margin="10" Command='{Binding ViewModel.AddCommand}' Name="AddKundenButton" />
+            <Button Content="{StaticResource action_reload}" Margin="10" Command='{Binding ViewModel.RefreshCommand}' Name="RefreshKundenButton"/>
         </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   IsReadOnly="True"
