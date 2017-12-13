@@ -37,6 +37,7 @@ namespace AutoReservation.UI.ViewModels
         public event EventHandler<int> OnRequestEditAuto;
         public event EventHandler<object> OnRequestCreateAuto;
         public event EventHandler<EventHandler<bool>> OnRequestDeleteAuto;
+        public event EventHandler<object> OnRequestDeleteFailed;
 
         #region commands
 
@@ -71,19 +72,19 @@ namespace AutoReservation.UI.ViewModels
 
         private void ExecuteDeleteCommand(AutoDto auto)
         {
-            OnRequestDeleteAuto?.Invoke(this, (caller, ok) => { if (ok) delete(auto); });
+            OnRequestDeleteAuto?.Invoke(this, (caller, ok) => { if (ok) Delete(auto); });
         }
 
-        private void delete(AutoDto auto)
+        private void Delete(AutoDto auto)
         {
             try
             {
                 AutoReservationService.DeleteAuto(auto);
-                RefreshCommand?.Execute(null);
             } catch (FaultException<DataManipulationFault> e)
             {
-
+                OnRequestDeleteFailed?.Invoke(this, null);
             }
+            RefreshCommand.Execute(null);
         }
 
         RelayCommand<int> _editCommand;

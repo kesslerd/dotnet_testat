@@ -20,7 +20,7 @@ namespace AutoReservation.UI.ViewModels
             if (id != -1)
             {
                 this.Id = id;
-                ReloadCommand?.Execute(null);
+                ReloadCommand.Execute(null);
             }
         }
 
@@ -85,6 +85,7 @@ namespace AutoReservation.UI.ViewModels
         }
 
         public event EventHandler OnRequestClose;
+        public event EventHandler OnSaveError;
 
         #region commands
 
@@ -94,7 +95,7 @@ namespace AutoReservation.UI.ViewModels
             get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.executeSaveCommand()));
         }
 
-        private void executeSaveCommand()
+        private void ExecuteSaveCommand()
         {
             try
             {
@@ -110,7 +111,8 @@ namespace AutoReservation.UI.ViewModels
             }
             catch (FaultException<DataManipulationFault> e)
             {
-
+                OnSaveError?.Invoke(this, null);
+                if (CanExecuteReloadCommand) ReloadCommand.Execute(null);
             }
         }
 
@@ -120,7 +122,7 @@ namespace AutoReservation.UI.ViewModels
             get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.executeCancelCommand()));
         }
 
-        private void executeCancelCommand()
+        private void ExecuteCancelCommand()
         {
             OnRequestClose?.Invoke(this, null);
         }
@@ -131,7 +133,7 @@ namespace AutoReservation.UI.ViewModels
             get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.executeReloadCommand(), param => canExecuteReloadCommand()));
         }
 
-        private void executeReloadCommand()
+        private void ExecuteReloadCommand()
         {
             this.autoDto = AutoReservationService.GetAuto(this.Id);
             OnPropertyChanged(nameof(Marke));
@@ -141,7 +143,7 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(RowVersion));
         }
 
-        private bool canExecuteReloadCommand()
+        private bool CanExecuteReloadCommand()
         {
             return RowVersion != null;
         }
