@@ -16,8 +16,10 @@
     <system:String x:Key="action_edit">Editieren</system:String>
     <system:String x:Key="action_cancel">Abbrechen</system:String>
     <system:String x:Key="action_reload">Reload</system:String>
-    <system:String x:Key="message_delete_confirm_title">Are you sure?</system:String>
-    <system:String x:Key="message_delete_confirm_message">Are you?</system:String>
+    <system:String x:Key="message_delete_confirm_title">Sicher?</system:String>
+    <system:String x:Key="message_delete_confirm_message_kunde">Willst Du den Kunden und seine Reservationen löschen?</system:String>
+    <system:String x:Key="message_delete_confirm_message_auto">Willst Du das Auto und die Reservationen löschen?</system:String>
+    <system:String x:Key="message_delete_confirm_message_reservation">Willst Du das die Reservationen löschen?</system:String>
 
     <system:String x:Key="message_error_save_kunde_message">Der Kunde konnte nicht gespeichert werden. Kunde wurde neu geladen, bitte erneut ändern</system:String>
     <system:String x:Key="message_error_save_kunde_title">Error: Kunde kann nicht gespeichert werden</system:String>
