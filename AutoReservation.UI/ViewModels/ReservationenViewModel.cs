@@ -8,6 +8,7 @@ using AutoReservation.Common.DataTransferObjects.Faults;
 using static AutoReservation.UI.Service.Service;
 using System.Windows.Input;
 using System.ServiceModel;
+using System.Windows.Threading;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -16,6 +17,7 @@ namespace AutoReservation.UI.ViewModels
         public ReservationenViewModel()
         {
             ExecuteRefreshCommand();
+            StartDispatcher();
         }
 
         private List<ReservationDto> _reservationen;
@@ -98,5 +100,13 @@ namespace AutoReservation.UI.ViewModels
         }
 
         #endregion
+
+        private void StartDispatcher()
+        {
+            var dispatcher = new DispatcherTimer();
+            dispatcher.Tick += (sender, arg) => ExecuteRefreshCommand();
+            dispatcher.Interval = new TimeSpan(0, 0, 30);
+            dispatcher.Start();
+        }
     }
 }
