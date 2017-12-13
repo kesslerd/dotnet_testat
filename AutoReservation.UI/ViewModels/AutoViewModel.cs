@@ -92,7 +92,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.executeSaveCommand()));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand()));
         }
 
         private void ExecuteSaveCommand()
@@ -119,7 +119,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _cancelCommand;
         public ICommand CancelCommand
         {
-            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.executeCancelCommand()));
+            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.ExecuteCancelCommand()));
         }
 
         private void ExecuteCancelCommand()
@@ -130,7 +130,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _reloadCommand;
         public ICommand ReloadCommand
         {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.executeReloadCommand(), param => canExecuteReloadCommand()));
+            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand));
         }
 
         private void ExecuteReloadCommand()
@@ -143,9 +143,10 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(RowVersion));
         }
 
-        private bool CanExecuteReloadCommand()
+        public bool CanExecuteReloadCommand
         {
-            return RowVersion != null;
+            get => RowVersion != null;
+            private set { }
         }
 
         #endregion
