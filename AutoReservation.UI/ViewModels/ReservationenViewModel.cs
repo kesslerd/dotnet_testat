@@ -15,7 +15,7 @@ namespace AutoReservation.UI.ViewModels
     {
         public ReservationenViewModel()
         {
-            executeRefreshCommand();
+            ExecuteRefreshCommand();
         }
 
         private List<ReservationDto> _reservationen;
@@ -41,10 +41,10 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _refreshCommand;
         public ICommand RefreshCommand
         {
-            get => _refreshCommand ?? (_refreshCommand = new RelayCommand<object>(param => this.executeRefreshCommand()));
+            get => _refreshCommand ?? (_refreshCommand = new RelayCommand<object>(param => this.ExecuteRefreshCommand()));
         }
 
-        private void executeRefreshCommand()
+        private void ExecuteRefreshCommand()
         {
             Reservationen = AutoReservationService.GetReservations();
         }
@@ -52,30 +52,30 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _addCommand;
         public ICommand AddCommand
         {
-            get => _addCommand ?? (_addCommand = new RelayCommand<object>(param => this.executeAddCommand()));
+            get => _addCommand ?? (_addCommand = new RelayCommand<object>(param => this.ExecuteAddCommand()));
         }
 
-        private void executeAddCommand()
+        private void ExecuteAddCommand()
         {
             OnRequestCreate?.Invoke(this, null);
         }
 
-        RelayCommand<KundeDto> _deleteCommand;
+        RelayCommand<ReservationDto> _deleteCommand;
         public ICommand DeleteCommand
         {
-            get => _deleteCommand ?? (_deleteCommand = new RelayCommand<KundeDto>(param => this.executeDeleteCommand(param)));
+            get => _deleteCommand ?? (_deleteCommand = new RelayCommand<ReservationDto>(param => this.ExecuteDeleteCommand(param)));
         }
 
-        private void executeDeleteCommand(KundeDto kunde)
+        private void ExecuteDeleteCommand(ReservationDto reservation)
         {
-            OnRequestDelete?.Invoke(this, (caller, ok) => { if (ok) delete(kunde); });
+            OnRequestDelete?.Invoke(this, (caller, ok) => { if (ok) Delete(reservation); });
         }
 
-        private void delete(KundeDto kunde)
+        private void Delete(ReservationDto reservation)
         {
             try
             {
-                AutoReservationService.DeleteKunde(kunde);
+                AutoReservationService.DeleteReservation(reservation);
                 RefreshCommand?.Execute(null);
             }
             catch (FaultException<DataManipulationFault> e)
@@ -87,10 +87,10 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<int> _editCommand;
         public ICommand EditCommand
         {
-            get => _editCommand ?? (_editCommand = new RelayCommand<int>(param => this.executeEditCommand(param)));
+            get => _editCommand ?? (_editCommand = new RelayCommand<int>(param => this.ExecuteEditCommand(param)));
         }
 
-        private void executeEditCommand(int id)
+        private void ExecuteEditCommand(int id)
         {
             OnRequestEdit?.Invoke(this, id);
         }

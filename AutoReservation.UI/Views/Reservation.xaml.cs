@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using AutoReservation.UI.ViewModels;
+using AutoReservation.Common.DataTransferObjects;
 
 namespace AutoReservation.UI.Views
 {
@@ -27,6 +28,17 @@ namespace AutoReservation.UI.Views
             InitializeComponent();
 
             ViewModel = new ReservationViewModel(reservationNr);
+            ViewModel.OnRequestSave += (reservation, action) =>
+            {
+                var selectedKunde = KundeInput.SelectedItem as KundeDto;
+                var selectedAuto = AutoInput.SelectedItem as AutoDto;
+
+                reservation = reservation as ReservationDto;
+                ((ReservationDto)reservation).Kunde = selectedKunde;
+                ((ReservationDto)reservation).Auto = selectedAuto;
+
+                action?.Invoke(this, true);
+            };
             ViewModel.OnRequestClose += (s, e) => this.Close();
 
             DataContext = this;

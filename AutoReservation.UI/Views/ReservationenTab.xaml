@@ -5,11 +5,36 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         mc:Ignorable="d"
-        d:DesignHeight="300" d:DesignWidth="300">
+        d:DesignHeight="300" d:DesignWidth="300"
+        d:DataContext="{d:DesignInstance local:ReservationenTab}">
     <StackPanel>
         <StackPanel Orientation="Horizontal">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
         </StackPanel>
+        <DataGrid AutoGenerateColumns="False"
+                  IsReadOnly="True"
+                  ItemsSource="{Binding ViewModel.Reservationen}">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="ID" Binding="{Binding ReservationsNr}"/>
+                <DataGridTextColumn Header="{StaticResource reservation_header_kunde}" Binding="{Binding Kunde}"/>
+                
+                <DataGridTemplateColumn Header="{StaticResource reservation_header_auto}">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate >
+                            <TextBlock>
+                                <Run Text="{Binding Auto.Marke}"/>
+                                <Run Text=" ("/>
+                                <Run Text="{Binding Auto.AutoKlasse}"/>
+                                <Run Text=")"/>
+                            </TextBlock>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTextColumn Header="{StaticResource reservation_header_von}" Binding="{Binding Von}"/>
+                <DataGridTextColumn Header="{StaticResource reservation_header_bis}" Binding="{Binding Bis}"/>
+            </DataGrid.Columns>
+
+        </DataGrid>
     </StackPanel>
 </UserControl>

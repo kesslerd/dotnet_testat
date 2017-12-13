@@ -11,7 +11,6 @@ namespace AutoReservation.BusinessLayer.Testing
         private ReservationManager target;
         private ReservationManager Target => target ?? (target = new ReservationManager());
 
-
         [TestInitialize]
         public void InitializeTestData()
         {

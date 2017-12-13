@@ -55,25 +55,40 @@ namespace AutoReservation.UI.ViewModels
         }
 
         public event EventHandler OnRequestClose;
+        public event EventHandler<EventHandler<bool>> OnRequestSave;
 
         #region commands
 
-        RelayCommand<object> _saveCommand;
+        RelayCommand<ReservationDto> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.executeSaveCommand()));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<ReservationDto>(param => this.ExecuteSaveCommand(reservationDto)));
         }
 
-        private void executeSaveCommand()
+        private void ExecuteSaveCommand(ReservationDto reservation)
+        {
+            /* TODO
+             *  Hier wird eigentlich der ok-Parameter nicht benötigt.
+             *  Ich habe aber noch nicht herausgefunden, wie man den Event-Handler genau typisieren muss,
+             *  damit man das Ding weglassen kann. */
+            OnRequestSave?.Invoke(reservation, (caller, ok) => { Save(reservation); });
+        }
+
+        private void Save(ReservationDto reservation)
         {
             try
             {
                 if (RowVersion != null)
                 {
-                    AutoReservationService.UpdateReservation(this.reservationDto);
+                    AutoReservationService.UpdateReservation(reservation);
                 }
+                else
+                {
+                    AutoReservationService.AddReservation(reservation);
+                }
+                OnRequestClose?.Invoke(this, null);
             }
-            catch(FaultException<DataManipulationFault> e)
+            catch (FaultException<DataManipulationFault> e)
             {
 
             }
@@ -82,10 +97,10 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _cancelCommand;
         public ICommand CancelCommand
         {
-            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.executeCancelCommand()));
+            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.ExecuteCancelCommand()));
         }
 
-        private void executeCancelCommand()
+        private void ExecuteCancelCommand()
         {
             OnRequestClose?.Invoke(this, null);
         }
@@ -93,10 +108,10 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _reloadCommand;
         public ICommand ReloadCommand
         {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.executeReloadCommand(), param => canExecuteReloadCommand()));
+            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand()));
         }
 
-        private void executeReloadCommand()
+        private void ExecuteReloadCommand()
         {
             this.reservationDto = AutoReservationService.GetReservation(this.ReservationsNr);
             OnPropertyChanged(nameof(ReservationsNr));
@@ -105,7 +120,7 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(RowVersion));
         }
 
-        private bool canExecuteReloadCommand()
+        private bool CanExecuteReloadCommand()
         {
             return RowVersion != null;
         }
