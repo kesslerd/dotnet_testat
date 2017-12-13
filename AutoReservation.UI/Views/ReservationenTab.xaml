@@ -17,17 +17,26 @@
                   ItemsSource="{Binding ViewModel.Reservationen}">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding ReservationsNr}"/>
-                <DataGridTextColumn Header="{StaticResource reservation_header_kunde}" Binding="{Binding Kunde}"/>
-                
-                <DataGridTemplateColumn Header="{StaticResource reservation_header_auto}">
+                <DataGridTemplateColumn Header="{StaticResource reservation_header_kunde}" SortMemberPath="Kunde.Vorname">
                     <DataGridTemplateColumn.CellTemplate>
-                        <DataTemplate >
-                            <TextBlock>
-                                <Run Text="{Binding Auto.Marke}"/>
-                                <Run Text=" ("/>
-                                <Run Text="{Binding Auto.AutoKlasse}"/>
-                                <Run Text=")"/>
-                            </TextBlock>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Kunde.Vorname}" />
+                                <TextBlock Text=" "/>
+                                <TextBlock Text="{Binding Kunde.Nachname}" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+                <DataGridTemplateColumn Header="{StaticResource reservation_header_auto}" SortMemberPath="Auto.Marke">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{Binding Auto.Marke}" />
+                                <TextBlock Text=" ("/>
+                                <TextBlock Text="{Binding Auto.AutoKlasse}" />
+                                <TextBlock Text=")"/>
+                            </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
