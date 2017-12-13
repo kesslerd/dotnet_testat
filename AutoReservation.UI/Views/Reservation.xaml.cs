@@ -41,7 +41,8 @@ namespace AutoReservation.UI.Views
             };
             ViewModel.OnRequestClose += (s, e) => this.Close();
             ViewModel.OnSaveError += (s, e) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_save_reservation_message"), (string)Application.Current.TryFindResource("message_error_save_reservation_title"), MessageBoxButton.OK, MessageBoxImage.Error);
-
+            ViewModel.OnSaveErrorAutoNotAvailable += (s, e) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_save_resetvation_message_auto"), (string)Application.Current.TryFindResource("message_error_save_reservation_title"), MessageBoxButton.OK, MessageBoxImage.Error);
+            ViewModel.OnSaveErrorDateRange += (s, e) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_save_resetvation_message_date"), (string)Application.Current.TryFindResource("message_error_save_reservation_title"), MessageBoxButton.OK, MessageBoxImage.Error);
             DataContext = this;
         }
     }

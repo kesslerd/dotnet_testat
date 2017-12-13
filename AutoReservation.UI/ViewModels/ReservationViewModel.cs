@@ -71,6 +71,8 @@ namespace AutoReservation.UI.ViewModels
         public event EventHandler OnRequestClose;
         public event EventHandler<EventHandler<object>> OnRequestSave;
         public event EventHandler OnSaveError;
+        public event EventHandler OnSaveErrorDateRange;
+        public event EventHandler OnSaveErrorAutoNotAvailable;
 
         #region commands
 
@@ -103,6 +105,14 @@ namespace AutoReservation.UI.ViewModels
             {
                 OnSaveError?.Invoke(this, null);
                 if (CanExecuteReloadCommand) ReloadCommand.Execute(null);
+            }
+            catch (FaultException<InvalidDateRangeFault>)
+            {
+                OnSaveErrorDateRange?.Invoke(this, null);
+            }
+            catch (FaultException<AutoUnavailableFault>)
+            {
+                OnSaveErrorAutoNotAvailable?.Invoke(this, null);
             }
         }
 
