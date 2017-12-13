@@ -14,7 +14,7 @@ namespace AutoReservation.UI.ViewModels
         public event EventHandler<object> OnRequestCreate;
         public event EventHandler<int> OnRequestEdit;
         public event EventHandler<EventHandler<bool>> OnRequestDelete;
-        public event EventHandler<object> OnReqestDeleteFailed;
+        public event EventHandler<object> OnRequestDeleteFailed;
 
         RelayCommand<object> _addCommand;
         public ICommand AddCommand
@@ -59,9 +59,9 @@ namespace AutoReservation.UI.ViewModels
 
         protected abstract void Delete(T o);
 
-        protected virtual void OnRequestDeleteFailed(EventArgs e = null)
+        protected virtual void InvokeOnRequestDeleteFailed(EventArgs e = null)
         {
-            OnReqestDeleteFailed?.Invoke(this, null);
+            OnRequestDeleteFailed?.Invoke(this, null);
         }
     }
 }

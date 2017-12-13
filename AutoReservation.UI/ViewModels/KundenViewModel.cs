@@ -41,7 +41,7 @@ namespace AutoReservation.UI.ViewModels
             }
             catch (FaultException<DataManipulationFault>)
             {
-                OnRequestDeleteFailed();
+                InvokeOnRequestDeleteFailed();
             }
             RefreshCommand.Execute(null);
         }

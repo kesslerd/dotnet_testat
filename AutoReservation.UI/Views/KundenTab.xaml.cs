@@ -34,7 +34,7 @@ namespace AutoReservation.UI.Views
                 var messageBoxResult = MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_message"), (string)Application.Current.TryFindResource("message_delete_confirm_title"), MessageBoxButton.YesNo);
                 action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
             };
-            ViewModel.OnReqestDeleteFailed += (caller, arg) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_delete_kunde_message"), (string)Application.Current.TryFindResource("message_error_delete_kunde_title"), MessageBoxButton.OK, MessageBoxImage.Error);
+            ViewModel.OnRequestDeleteFailed += (caller, arg) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_delete_kunde_message"), (string)Application.Current.TryFindResource("message_error_delete_kunde_title"), MessageBoxButton.OK, MessageBoxImage.Error);
             DataContext = this;
         }
     }
