@@ -23,13 +23,18 @@ namespace AutoReservation.UI.Views
     {
         public KundeViewModel ViewModel { get; set; }
 
-        public Kunde(int kundeId = -1)
+        public Kunde(int kundeId )
         {
             InitializeComponent();
 
             ViewModel = new KundeViewModel(kundeId);
             ViewModel.OnRequestClose += (s, e) => this.Close();
+            ViewModel.OnSaveError += (s, e) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_save_kunde_message"), (string)Application.Current.TryFindResource("message_error_save_kunde_title"), MessageBoxButton.OK, MessageBoxImage.Error);
             DataContext = this;
+        }
+
+        public Kunde() : this(-1)
+        {
         }
     }
 }
