@@ -41,7 +41,6 @@ namespace AutoReservation.BusinessLayer
                 CheckAvailability(reservation);
 
                 context.Entry(reservation).State = EntityState.Added;
-                context.Reservationen.Add(reservation);
                 context.SaveChanges();
             }
         }

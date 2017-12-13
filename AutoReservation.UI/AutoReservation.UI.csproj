@@ -65,10 +65,18 @@
     <Compile Include="Service\Service.cs" />
     <Compile Include="ViewModels\BaseDialogViewModel.cs" />
     <Compile Include="ViewModels\BaseTabViewModel.cs" />
+    <Compile Include="ViewModels\AutosViewModel.cs" />
+    <Compile Include="ViewModels\AutoViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\KundenViewModel.cs" />
     <Compile Include="ViewModels\KundeViewModel.cs" />
     <Compile Include="ViewModels\RelayCommand.cs" />
+    <Compile Include="Views\Auto.xaml.cs">
+      <DependentUpon>Auto.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\AutosTab.xaml.cs">
+      <DependentUpon>AutosTab.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\ReservationenViewModel.cs" />
     <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="Views\Kunde.xaml.cs">
@@ -95,7 +103,19 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="Resources\AutoKlasse.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\Strings.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Auto.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\AutosTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
