@@ -8,6 +8,7 @@ using AutoReservation.Common.DataTransferObjects.Faults;
 using static AutoReservation.UI.Service.Service;
 using System.Windows.Input;
 using System.ServiceModel;
+using System.Windows.Threading;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -16,6 +17,7 @@ namespace AutoReservation.UI.ViewModels
         public ReservationenViewModel()
         {
             ExecuteRefreshCommand();
+            StartDispatcher();
         }
 
         private List<ReservationDto> _reservationen;
@@ -29,6 +31,22 @@ namespace AutoReservation.UI.ViewModels
             {
                 _reservationen = value;
                 OnPropertyChanged(nameof(Reservationen));
+            }
+        }
+
+        private bool _includeFinished = true;
+
+        public bool IncludeFinished
+        {
+            get
+            {
+                return _includeFinished;
+            }
+            set
+            {
+                _includeFinished = value;
+                ExecuteRefreshCommand();
+                OnPropertyChanged(nameof(IncludeFinished));
             }
         }
 
@@ -47,7 +65,7 @@ namespace AutoReservation.UI.ViewModels
 
         private void ExecuteRefreshCommand()
         {
-            Reservationen = AutoReservationService.GetReservations();
+            Reservationen = AutoReservationService.GetReservations(IncludeFinished);
         }
 
         RelayCommand<object> _addCommand;
@@ -98,5 +116,13 @@ namespace AutoReservation.UI.ViewModels
         }
 
         #endregion
+
+        private void StartDispatcher()
+        {
+            var dispatcher = new DispatcherTimer();
+            dispatcher.Tick += (sender, arg) => ExecuteRefreshCommand();
+            dispatcher.Interval = new TimeSpan(0, 0, 30);
+            dispatcher.Start();
+        }
     }
 }
