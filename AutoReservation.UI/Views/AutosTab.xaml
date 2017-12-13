@@ -11,6 +11,7 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
+            
         </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   IsReadOnly="True"

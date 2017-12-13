@@ -34,6 +34,22 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
+        private bool _includeFinished = true;
+
+        public bool IncludeFinished
+        {
+            get
+            {
+                return _includeFinished;
+            }
+            set
+            {
+                _includeFinished = value;
+                ExecuteRefreshCommand();
+                OnPropertyChanged(nameof(IncludeFinished));
+            }
+        }
+
         public event EventHandler<int> OnRequestEdit;
         public event EventHandler<object> OnRequestCreate;
         public event EventHandler<EventHandler<bool>> OnRequestDelete;
@@ -49,7 +65,7 @@ namespace AutoReservation.UI.ViewModels
 
         private void ExecuteRefreshCommand()
         {
-            Reservationen = AutoReservationService.GetReservations();
+            Reservationen = AutoReservationService.GetReservations(IncludeFinished);
         }
 
         RelayCommand<object> _addCommand;
