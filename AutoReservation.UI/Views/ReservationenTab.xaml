@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         d:DesignHeight="300" d:DesignWidth="300"
         d:DataContext="{d:DesignInstance local:ReservationenTab}">
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
         </StackPanel>
@@ -45,5 +45,5 @@
             </DataGrid.Columns>
 
         </DataGrid>
-    </StackPanel>
+    </DockPanel>
 </UserControl>

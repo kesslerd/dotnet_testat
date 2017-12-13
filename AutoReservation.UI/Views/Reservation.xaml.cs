@@ -40,6 +40,7 @@ namespace AutoReservation.UI.Views
                 action?.Invoke(this, true);
             };
             ViewModel.OnRequestClose += (s, e) => this.Close();
+            ViewModel.OnSaveError += (s, e) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_save_reservation_message"), (string)Application.Current.TryFindResource("message_error_save_reservation_title"), MessageBoxButton.OK, MessageBoxImage.Error);
 
             DataContext = this;
         }

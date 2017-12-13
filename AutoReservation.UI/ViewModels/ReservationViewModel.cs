@@ -56,6 +56,7 @@ namespace AutoReservation.UI.ViewModels
 
         public event EventHandler OnRequestClose;
         public event EventHandler<EventHandler<bool>> OnRequestSave;
+        public event EventHandler OnSaveError;
 
         #region commands
 
@@ -88,9 +89,10 @@ namespace AutoReservation.UI.ViewModels
                 }
                 OnRequestClose?.Invoke(this, null);
             }
-            catch (FaultException<DataManipulationFault> e)
+            catch (FaultException<DataManipulationFault>)
             {
-
+                OnSaveError?.Invoke(this, null);
+                if (CanExecuteReloadCommand) ReloadCommand.Execute(null);
             }
         }
 
@@ -108,7 +110,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _reloadCommand;
         public ICommand ReloadCommand
         {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand()));
+            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand));
         }
 
         private void ExecuteReloadCommand()
@@ -118,11 +120,13 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Von));
             OnPropertyChanged(nameof(Bis));
             OnPropertyChanged(nameof(RowVersion));
+            OnPropertyChanged(nameof(CanExecuteReloadCommand));
         }
 
-        private bool CanExecuteReloadCommand()
+        public bool CanExecuteReloadCommand
         {
-            return RowVersion != null;
+            get => RowVersion != null;
+            private set { }
         }
 
         #endregion

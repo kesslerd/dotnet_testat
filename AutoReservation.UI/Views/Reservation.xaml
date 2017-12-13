@@ -57,9 +57,9 @@
             <DatePicker Grid.Row="3" SelectedDate="{Binding Path=ViewModel.Bis, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
         </Grid>
         <StackPanel Orientation="Horizontal">
-            <Button Content="Speichern" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
-            <Button Content="Abbrechen" Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
-            <Button Content="Reload" Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
+            <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
+            <Button Content="{StaticResource action_cancel}" Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
+            <Button Content="{StaticResource action_reload}" Margin="10" Command='{Binding ViewModel.ReloadCommand}' IsEnabled="{Binding ViewModel.CanExecuteReloadCommand}"/>
         </StackPanel>
     </StackPanel>
 </Window>
