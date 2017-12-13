@@ -4,10 +4,9 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
-        d:DataContext="{d:DesignInstance local:Kunde,IsDesignTimeCreatable=True}"
-
-    mc:Ignorable="d"
-        Title="Kunde" Height="0.11" Width="241.6" MinHeight="168.4" MinWidth="312.8">
+        d:DataContext="{d:DesignInstance local:Kunde}"
+        mc:Ignorable="d"
+        Title="Kunde" Height="200" Width="360" MinHeight="200" MinWidth="360">
     <StackPanel>
         <Grid Margin="10 10 10 10" MaxHeight="148">
             <Grid.RowDefinitions>
@@ -27,7 +26,6 @@
             <TextBox Name="LastNameInput" Text ="{Binding ViewModel.Nachname, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
             <!-- TODO MAX Date today-->
             <DatePicker Grid.Row="2" SelectedDate="{Binding Path=ViewModel.Geburtsdatum, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
-
         </Grid>
         <StackPanel Orientation="Horizontal">
             <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
