@@ -19,6 +19,10 @@
     <system:String x:Key="message_delete_confirm_title">Are you sure?</system:String>
     <system:String x:Key="message_delete_confirm_message">Are you?</system:String>
 
+    <system:String x:Key="message_error_save_kunde_message">Der Kunde konnte nicht gespeichert werden. Kunde wurde neu geladen, bitte erneut ändern</system:String>
+    <system:String x:Key="message_error_save_kunde_title">Error: Kunde kann nicht gespeichert werden</system:String>
+    <system:String x:Key="message_error_delete_kunde_message">Der Kunde konnte nicht gelöscht werden. Kunde wurde neu geladen, bitte erneut löschen</system:String>
+    <system:String x:Key="message_error_delete_kunde_title">Error: Kunde kann nicht gelöscht werden</system:String>
     <system:String x:Key="message_error_save_reservation_message">Der Reservation konnte nicht gespeichert werden. Kunde wurde neu geladen, bitte erneut ändern</system:String>
     <system:String x:Key="message_error_save_resetvation_title">Error: Reservation kann nicht gespeichert werden</system:String>
     <system:String x:Key="message_error_delete_reservation_message">Der Reservation konnte nicht gelöscht werden. Kunde wurde neu geladen, bitte erneut löschen</system:String>

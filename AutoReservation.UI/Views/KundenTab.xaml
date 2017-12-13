@@ -7,14 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300" 
              d:DataContext="{d:DesignInstance local:KundenTab}" >
-    <StackPanel>
-        <StackPanel Orientation="Horizontal">
+    <DockPanel>
+        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
         </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   IsReadOnly="True"
-                  ItemsSource="{Binding ViewModel.Kunden}">
+                  ItemsSource="{Binding ViewModel.Kunden}"
+                  HorizontalContentAlignment="Stretch"
+                  VerticalAlignment="Stretch"
+                  Height="auto"
+                  ScrollViewer.CanContentScroll="True" 
+                  ScrollViewer.VerticalScrollBarVisibility="Auto"
+                  ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
                 <DataGridTextColumn Header="{StaticResource kunde_header_firstname}" Binding="{Binding Vorname}" />
@@ -32,5 +38,5 @@
                 </DataGridTemplateColumn>
             </DataGrid.Columns>
         </DataGrid>
-    </StackPanel>
+    </DockPanel>
 </UserControl>

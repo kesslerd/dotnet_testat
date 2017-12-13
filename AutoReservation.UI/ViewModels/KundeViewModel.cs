@@ -20,7 +20,7 @@ namespace AutoReservation.UI.ViewModels
             if (id != -1)
             {
                 this.Id = id;
-                ReloadCommand?.Execute(null);
+                ReloadCommand.Execute(null);
             }
         }
 
@@ -50,13 +50,14 @@ namespace AutoReservation.UI.ViewModels
         }
 
 
-        public byte[] RowVerwion
+        public byte[] RowVersion
         {
             get { return kundeDto.RowVersion; }
-            set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVerwion)); }
+            set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
         }
 
         public event EventHandler OnRequestClose;
+        public event EventHandler OnSaveError;
 
         #region commands
         RelayCommand<object> _saveCommand;
@@ -68,7 +69,7 @@ namespace AutoReservation.UI.ViewModels
         private void executeSaveCommand()
         {
             try { 
-                if(RowVerwion != null)
+                if(RowVersion != null)
                 {
                     AutoReservationService.UpdateKunde(this.kundeDto);
                 }
@@ -78,9 +79,10 @@ namespace AutoReservation.UI.ViewModels
                 }
                 OnRequestClose?.Invoke(this, null);
             }
-            catch (FaultException<DataManipulationFault> e)
+            catch (FaultException<DataManipulationFault>)
             {
-
+                OnSaveError?.Invoke(this, null);
+                if (CanExecuteReloadCommand) ReloadCommand.Execute(null);                        
             }
         }
 
@@ -98,7 +100,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _reloadCommand;
         public ICommand ReloadCommand
         {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.executeReloadCommand(), param => canExecuteReloadCommand()));
+            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.executeReloadCommand(), param => CanExecuteReloadCommand));
         }
 
         private void executeReloadCommand()
@@ -107,12 +109,14 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Nachname));
             OnPropertyChanged(nameof(Vorname));
             OnPropertyChanged(nameof(Geburtsdatum));
-            OnPropertyChanged(nameof(RowVerwion));
+            OnPropertyChanged(nameof(RowVersion));
+            OnPropertyChanged(nameof(CanExecuteReloadCommand));
         }
 
-        private bool canExecuteReloadCommand()
+        public bool CanExecuteReloadCommand
         {
-            return RowVerwion != null;
+            get => RowVersion != null;
+            private set { }
         }
         #endregion
 
