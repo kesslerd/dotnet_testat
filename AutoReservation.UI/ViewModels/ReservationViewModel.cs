@@ -23,7 +23,7 @@ namespace AutoReservation.UI.ViewModels
             if (reservationsNr != -1)
             {
                 this.ReservationsNr = reservationsNr;
-                ReloadCommand?.Execute(null);
+                ReloadCommand.Execute(null);
             }
         }
 
@@ -69,7 +69,7 @@ namespace AutoReservation.UI.ViewModels
         }
 
         public event EventHandler OnRequestClose;
-        public event EventHandler<EventHandler<bool>> OnRequestSave;
+        public event EventHandler<EventHandler<object>> OnRequestSave;
         public event EventHandler OnSaveError;
 
         #region commands
@@ -82,11 +82,7 @@ namespace AutoReservation.UI.ViewModels
 
         private void ExecuteSaveCommand(ReservationDto reservation)
         {
-            /* TODO
-             *  Hier wird eigentlich der ok-Parameter nicht benötigt.
-             *  Ich habe aber noch nicht herausgefunden, wie man den Event-Handler genau typisieren muss,
-             *  damit man das Ding weglassen kann. */
-            OnRequestSave?.Invoke(reservation, (caller, ok) => { Save(reservation); });
+            OnRequestSave?.Invoke(reservation, (caller, _) => { Save(reservation); });
         }
 
         private void Save(ReservationDto reservation)

@@ -77,13 +77,13 @@ namespace AutoReservation.UI.ViewModels
             try
             {
                 AutoReservationService.DeleteReservation(reservation);
-                RefreshCommand?.Execute(null);
             }
             catch (FaultException<DataManipulationFault>)
             {
                 OnRequestDeleteFailed?.Invoke(this, null);
-                RefreshCommand?.Execute(null);
             }
+
+            RefreshCommand.Execute(null);
         }
 
         RelayCommand<int> _editCommand;
