@@ -16,7 +16,7 @@
                 <localViews:AutosTab/>
             </TabItem>
             <TabItem Header="Reservationen">
-
+                <localViews:ReservationenTab/>
             </TabItem>
         </TabControl>
     </Grid>

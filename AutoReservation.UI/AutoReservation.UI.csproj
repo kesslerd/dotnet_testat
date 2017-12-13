@@ -75,11 +75,19 @@
     <Compile Include="Views\AutosTab.xaml.cs">
       <DependentUpon>AutosTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ReservationenViewModel.cs" />
+    <Compile Include="ViewModels\ReservationViewModel.cs" />
     <Compile Include="Views\Kunde.xaml.cs">
       <DependentUpon>Kunde.xaml</DependentUpon>
     </Compile>
     <Compile Include="Views\KundenTab.xaml.cs">
       <DependentUpon>KundenTab.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Reservation.xaml.cs">
+      <DependentUpon>Reservation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ReservationenTab.xaml.cs">
+      <DependentUpon>ReservationenTab.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -114,6 +122,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\KundenTab.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Reservation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ReservationenTab.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
