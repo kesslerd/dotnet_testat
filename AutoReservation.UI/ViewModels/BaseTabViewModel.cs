@@ -61,7 +61,7 @@ namespace AutoReservation.UI.ViewModels
 
         protected virtual void InvokeOnRequestDeleteFailed(EventArgs e = null)
         {
-            OnRequestDeleteFailed?.Invoke(this, null);
+            OnRequestDeleteFailed?.Invoke(this, e);
         }
     }
 }
