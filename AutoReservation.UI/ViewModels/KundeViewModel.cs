@@ -20,7 +20,7 @@ namespace AutoReservation.UI.ViewModels
             if (id != -1)
             {
                 this.Id = id;
-                ReloadCommand?.Execute(null);
+                ReloadCommand.Execute(null);
             }
         }
 
@@ -50,10 +50,10 @@ namespace AutoReservation.UI.ViewModels
         }
 
 
-        public byte[] RowVerwion
+        public byte[] RowVersion
         {
             get { return kundeDto.RowVersion; }
-            set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVerwion)); }
+            set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
         }
 
         public event EventHandler OnRequestClose;
@@ -69,7 +69,7 @@ namespace AutoReservation.UI.ViewModels
         private void executeSaveCommand()
         {
             try { 
-                if(RowVerwion != null)
+                if(RowVersion != null)
                 {
                     AutoReservationService.UpdateKunde(this.kundeDto);
                 }
@@ -82,7 +82,7 @@ namespace AutoReservation.UI.ViewModels
             catch (FaultException<DataManipulationFault>)
             {
                 OnSaveError?.Invoke(this, null);
-                if (CanExecuteReloadCommand) ReloadCommand?.Execute(null);                        
+                if (CanExecuteReloadCommand) ReloadCommand.Execute(null);                        
             }
         }
 
@@ -109,13 +109,13 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Nachname));
             OnPropertyChanged(nameof(Vorname));
             OnPropertyChanged(nameof(Geburtsdatum));
-            OnPropertyChanged(nameof(RowVerwion));
+            OnPropertyChanged(nameof(RowVersion));
             OnPropertyChanged(nameof(CanExecuteReloadCommand));
         }
 
         public bool CanExecuteReloadCommand
         {
-            get => RowVerwion != null;
+            get => RowVersion != null;
             private set { }
         }
         #endregion

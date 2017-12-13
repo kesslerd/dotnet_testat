@@ -78,13 +78,12 @@ namespace AutoReservation.UI.ViewModels
             try
             {
                 AutoReservationService.DeleteKunde(kunde);
-                RefreshCommand?.Execute(null);
             }
             catch (FaultException<DataManipulationFault>)
             {
                 OnDeleteKundeFailed?.Invoke(this, null);
-                RefreshCommand?.Execute(null);
             }
+            RefreshCommand.Execute(null);
         }
 
         RelayCommand<int> _editCommand;
