@@ -30,7 +30,7 @@ namespace AutoReservation.UI.Views
             ViewModel.OnRequestCreate += (caller, arg) => { (new Views.Reservation()).ShowDialog(); };
             ViewModel.OnRequestEdit += (caller, reservationsNr) => { (new Views.Reservation(reservationsNr)).ShowDialog(); };
             ViewModel.OnRequestDelete += (caller, action) => {
-                var messageBoxResult = MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_title"), (string)Application.Current.TryFindResource("message_delete_confirm_message"), MessageBoxButton.YesNo);
+                var messageBoxResult = MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_message"), (string)Application.Current.TryFindResource("message_delete_confirm_title"), MessageBoxButton.YesNo);
                 action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
             };
             ViewModel.OnRequestDeleteFailed += (caller, arg) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_delete_reservation_message"), (string)Application.Current.TryFindResource("message_error_delete_reservation_title"), MessageBoxButton.OK, MessageBoxImage.Error);
