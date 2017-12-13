@@ -84,7 +84,7 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public bool IsEdit
+        public bool IsNew
         {
             get => RowVersion == null;
         }

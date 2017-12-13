@@ -43,7 +43,7 @@
                 Grid.Row="1" 
                 Grid.Column="1" 
                 Margin="0 0 0 3" 
-                IsEnabled="{Binding ViewModel.IsEdit}"/>
+                IsEnabled="{Binding ViewModel.IsNew}"/>
 
         </Grid>
         <StackPanel Orientation="Horizontal">
