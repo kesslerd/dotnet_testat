@@ -41,6 +41,7 @@ namespace AutoReservation.UI.ViewModels
             {
                 autoDto.Marke = value;
                 OnPropertyChanged(nameof(Marke));
+                OnPropertyChanged(nameof(CanSafe));
             }
         }
 
@@ -71,6 +72,7 @@ namespace AutoReservation.UI.ViewModels
             {
                 autoDto.AutoKlasse = value;
                 OnPropertyChanged(nameof(AutoKlasse));
+                OnPropertyChanged(nameof(CanSafe));
             }
         }
         
@@ -89,6 +91,14 @@ namespace AutoReservation.UI.ViewModels
             get => RowVersion == null;
         }
 
+        public bool CanSafe
+        {
+            get
+            {
+                return Marke != null && Marke.Trim().Length != 0 && AutoKlasse != null;
+            }
+        }
+
         public event EventHandler OnRequestClose;
         public event EventHandler OnSaveError;
 
@@ -97,7 +107,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand()));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand(), param => CanSafe));
         }
 
         private void ExecuteSaveCommand()
@@ -145,6 +155,7 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Basistarif));
             OnPropertyChanged(nameof(Tagestarif));
             OnPropertyChanged(nameof(AutoKlasse));
+            OnPropertyChanged(nameof(CanSafe));
             OnPropertyChanged(nameof(RowVersion));
         }
 
