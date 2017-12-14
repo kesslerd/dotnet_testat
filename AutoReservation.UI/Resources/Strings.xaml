@@ -38,5 +38,6 @@
 
     <system:String x:Key="validation_date_too_old">Datum muss älter als {minDate} sein.</system:String>
     <system:String x:Key="validation_date_too_far">Datum muss vor {maxDate} sein.</system:String>
+    <system:String x:Key="validation_date_not_valid">Datum nicht gültig.</system:String>
 
 </ResourceDictionary>

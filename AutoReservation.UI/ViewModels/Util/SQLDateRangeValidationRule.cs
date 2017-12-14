@@ -21,7 +21,7 @@ namespace AutoReservation.UI.ViewModels.Util
             }
             catch (FormatException)
             {
-                return new ValidationResult(false, "Value is not a valid date.");
+                return new ValidationResult(false, (string)Application.Current.TryFindResource("validation_date_not_valid"));
             }
             if (date < (DateTime)SqlDateTime.MinValue)
             {
