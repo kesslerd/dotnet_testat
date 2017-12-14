@@ -27,9 +27,9 @@ namespace AutoReservation.UI.ViewModels.Util
             {
                 string msg = ((string)Application.Current.TryFindResource("validation_date_too_old")).Replace("{minDate}", ((DateTime)SqlDateTime.MinValue).ToShortDateString());
                 return new ValidationResult(false, msg);
-            } else if(date > (DateTime)SqlDateTime.MinValue)
+            } else if(date > (DateTime)SqlDateTime.MaxValue)
             {
-                string msg = ((string)Application.Current.TryFindResource("validation_date_too_far")).Replace("{maxDate}", ((DateTime)SqlDateTime.MinValue).ToShortDateString());
+                string msg = ((string)Application.Current.TryFindResource("validation_date_too_far")).Replace("{maxDate}", ((DateTime)SqlDateTime.MaxValue).ToShortDateString());
                 return new ValidationResult(false,msg);
             }
             else
