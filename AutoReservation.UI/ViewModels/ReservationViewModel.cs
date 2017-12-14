@@ -8,6 +8,7 @@ using System.Windows.Input;
 using static AutoReservation.UI.Service.Service;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using System.Data.SqlTypes;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -34,14 +35,14 @@ namespace AutoReservation.UI.ViewModels
         public KundeDto SelectedKunde
         {
             get { return _selectedKunde; }
-            set { _selectedKunde = value; OnPropertyChanged(nameof(SelectedKunde)); }
+            set { _selectedKunde = value; OnPropertyChanged(nameof(SelectedKunde)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         private AutoDto _selectedAuto;
         public AutoDto SelectedAuto
         {
             get { return _selectedAuto; }
-            set { _selectedAuto = value; OnPropertyChanged(nameof(SelectedAuto)); }
+            set { _selectedAuto = value; OnPropertyChanged(nameof(SelectedAuto)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public int ReservationsNr
@@ -53,19 +54,27 @@ namespace AutoReservation.UI.ViewModels
         public DateTime Von
         {
             get { return reservationDto.Von; }
-            set { reservationDto.Von = value; OnPropertyChanged(nameof(Von)); }
+            set { reservationDto.Von = value; OnPropertyChanged(nameof(Von)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public DateTime Bis
         {
             get { return reservationDto.Bis; }
-            set { reservationDto.Bis = value; OnPropertyChanged(nameof(Bis)); }
+            set { reservationDto.Bis = value; OnPropertyChanged(nameof(Bis)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public byte[] RowVersion
         {
             get { return reservationDto.RowVersion; }
             set { reservationDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
+        }
+
+        public bool CanSafe
+        {
+            get
+            {
+                return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
+            }
         }
 
         public event EventHandler OnRequestClose;
@@ -77,7 +86,7 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<ReservationDto> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<ReservationDto>(param => this.ExecuteSaveCommand(reservationDto)));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<ReservationDto>(param => this.ExecuteSaveCommand(reservationDto), param => CanSafe));
         }
 
         private void ExecuteSaveCommand(ReservationDto reservation)
@@ -137,6 +146,7 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Bis));
             OnPropertyChanged(nameof(RowVersion));
             OnPropertyChanged(nameof(CanExecuteReloadCommand));
+            OnPropertyChanged(nameof(CanSafe));
         }
 
         public bool CanExecuteReloadCommand

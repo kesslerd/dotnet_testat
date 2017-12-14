@@ -8,6 +8,7 @@ using System.Windows.Input;
 using static AutoReservation.UI.Service.Service;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using System.Data.SqlTypes;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -33,20 +34,20 @@ namespace AutoReservation.UI.ViewModels
         public String Nachname
         {
             get { return kundeDto.Nachname; }
-            set { kundeDto.Nachname = value; OnPropertyChanged(nameof(Nachname)); }
+            set { kundeDto.Nachname = value; OnPropertyChanged(nameof(Nachname)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public String Vorname
         {
             get { return kundeDto.Vorname; }
-            set { kundeDto.Vorname = value; OnPropertyChanged(nameof(Vorname)); }
+            set { kundeDto.Vorname = value; OnPropertyChanged(nameof(Vorname)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
 
         public DateTime Geburtsdatum
         {
             get { return kundeDto.Geburtsdatum; }
-            set { kundeDto.Geburtsdatum = value; OnPropertyChanged(nameof(Geburtsdatum)); }
+            set { kundeDto.Geburtsdatum = value; OnPropertyChanged(nameof(Geburtsdatum)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
 
@@ -59,11 +60,19 @@ namespace AutoReservation.UI.ViewModels
         public event EventHandler OnRequestClose;
         public event EventHandler OnSaveError;
 
+        public bool CanSafe
+        {
+            get
+            {
+                return Nachname != null && Nachname.Trim().Length != 0 && Vorname != null && Vorname.Trim().Length != 0 && Geburtsdatum != null && Geburtsdatum > (DateTime)SqlDateTime.MinValue;
+            }
+        }
+
         #region commands
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.executeSaveCommand()));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.executeSaveCommand(), param => CanSafe));
         }
 
         private void executeSaveCommand()
@@ -109,6 +118,7 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Nachname));
             OnPropertyChanged(nameof(Vorname));
             OnPropertyChanged(nameof(Geburtsdatum));
+            OnPropertyChanged(nameof(CanSafe));
             OnPropertyChanged(nameof(RowVersion));
             OnPropertyChanged(nameof(CanExecuteReloadCommand));
         }
