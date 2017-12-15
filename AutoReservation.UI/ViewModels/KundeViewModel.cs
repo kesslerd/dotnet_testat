@@ -87,7 +87,7 @@ namespace AutoReservation.UI.ViewModels
             catch (FaultException<DataManipulationFault>)
             {
                 InvokeOnSaveError();
-                if (CanReload) ReloadCommand.Execute(null);                        
+                if (CanReload) ReloadCommand.Execute(null);
             }
         }
 

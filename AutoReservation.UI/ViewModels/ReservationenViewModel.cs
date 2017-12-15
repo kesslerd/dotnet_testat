@@ -32,21 +32,6 @@ namespace AutoReservation.UI.ViewModels
                 OnPropertyChanged(nameof(Reservationen));
             }
         }
-        
-        private bool _includeFinished = true;
-        public bool IncludeFinished
-        {
-            get
-            {
-                return _includeFinished;
-            }
-            set
-            {
-                _includeFinished = value;
-                ExecuteRefreshCommand();
-                OnPropertyChanged(nameof(IncludeFinished));
-            }
-        }
 
         private bool _includeFinished = true;
         public bool IncludeFinished
