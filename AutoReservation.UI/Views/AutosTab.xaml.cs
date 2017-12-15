@@ -27,14 +27,17 @@ namespace AutoReservation.UI.Views
         public AutosTab()
         {
             InitializeComponent();
+
             ViewModel = new AutosViewModel();
-            ViewModel.OnRequestCreateAuto += (caller, arg) => { (new Views.Auto()).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
-            ViewModel.OnRequestEditAuto += (caller, id) => { (new Views.Auto(id)).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
-            ViewModel.OnRequestDeleteAuto += (caller, action) =>
+            ViewModel.OnRequestCreate += (caller, arg) => { (new Views.Auto()).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
+            ViewModel.OnRequestEdit += (caller, id) => { (new Views.Auto(id)).ShowDialog(); ViewModel.RefreshCommand?.Execute(null); };
+            ViewModel.OnRequestDelete += (caller, action) =>
             {
-                var messageBoxResult = System.Windows.MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_title"), ((string)Application.Current.TryFindResource("message_delete_confirm_message")), MessageBoxButton.YesNo);
+                var messageBoxResult = System.Windows.MessageBox.Show((string)Application.Current.TryFindResource("message_delete_confirm_message_auto"), ((string)Application.Current.TryFindResource("message_delete_confirm_title")), MessageBoxButton.YesNo);
                 action?.Invoke(this, messageBoxResult == MessageBoxResult.Yes);
             };
+            ViewModel.OnRequestDeleteFailed += (caller, arg) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_delete_auto_message"), (string)Application.Current.TryFindResource("message_error_delete_auto_title"), MessageBoxButton.OK, MessageBoxImage.Error);
+
             DataContext = this;
         }
     }
