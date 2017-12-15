@@ -69,6 +69,9 @@ namespace AutoReservation.UI.ViewModels
             set { reservationDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
         }
 
+        public event EventHandler OnSaveErrorDateRange;
+        public event EventHandler OnSaveErrorAutoNotAvailable;
+        
         public override bool CanSafe
         {
             get
@@ -76,6 +79,7 @@ namespace AutoReservation.UI.ViewModels
                 return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
             }
         }
+
 
         public override bool CanReload
         {
@@ -110,6 +114,14 @@ namespace AutoReservation.UI.ViewModels
             {
                 InvokeOnSaveError();
                 if (CanReload) ReloadCommand.Execute(null);
+            }
+            catch (FaultException<InvalidDateRangeFault>)
+            {
+                OnSaveErrorDateRange?.Invoke(this, null);
+            }
+            catch (FaultException<AutoUnavailableFault>)
+            {
+                OnSaveErrorAutoNotAvailable?.Invoke(this, null);
             }
         }
         
