@@ -140,10 +140,10 @@ namespace AutoReservation.Service.Wcf
             return DtoConverter.ConvertToDto(reservationManager.Find(id));
         }
 
-        public List<ReservationDto> GetReservations()
+        public List<ReservationDto> GetReservations(bool includeFinished = true)
         {
             WriteActualMethod();
-            return DtoConverter.ConvertToDtos(reservationManager.List);
+            return DtoConverter.ConvertToDtos(reservationManager.List(includeFinished));
         }
         
         public void UpdateReservation(ReservationDto reservation)

@@ -8,6 +8,7 @@ using System.Windows.Input;
 using static AutoReservation.UI.Service.Service;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using System.Data.SqlTypes;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -34,14 +35,14 @@ namespace AutoReservation.UI.ViewModels
         public KundeDto SelectedKunde
         {
             get { return _selectedKunde; }
-            set { _selectedKunde = value; OnPropertyChanged(nameof(SelectedKunde)); }
+            set { _selectedKunde = value; OnPropertyChanged(nameof(SelectedKunde)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         private AutoDto _selectedAuto;
         public AutoDto SelectedAuto
         {
             get { return _selectedAuto; }
-            set { _selectedAuto = value; OnPropertyChanged(nameof(SelectedAuto)); }
+            set { _selectedAuto = value; OnPropertyChanged(nameof(SelectedAuto)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public int ReservationsNr
@@ -53,13 +54,13 @@ namespace AutoReservation.UI.ViewModels
         public DateTime Von
         {
             get { return reservationDto.Von; }
-            set { reservationDto.Von = value; OnPropertyChanged(nameof(Von)); }
+            set { reservationDto.Von = value; OnPropertyChanged(nameof(Von)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public DateTime Bis
         {
             get { return reservationDto.Bis; }
-            set { reservationDto.Bis = value; OnPropertyChanged(nameof(Bis)); }
+            set { reservationDto.Bis = value; OnPropertyChanged(nameof(Bis)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public byte[] RowVersion
@@ -74,6 +75,11 @@ namespace AutoReservation.UI.ViewModels
         protected override void ExecuteSaveCommand()
         {
             OnRequestSave?.Invoke(this.reservationDto, (caller, _) => { Save(this.reservationDto); });
+        }
+        
+        protected override bool CanExecuteSaveCommand()
+        {
+            return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
         }
 
         protected override bool CanExecuteSaveCommand()
@@ -116,6 +122,7 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Bis));
             OnPropertyChanged(nameof(RowVersion));
             OnPropertyChanged(nameof(CanExecuteReloadCommand));
+            OnPropertyChanged(nameof(CanSafe));
         }
 
         protected override bool CanExecuteReloadCommand()

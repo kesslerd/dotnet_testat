@@ -14,15 +14,13 @@ namespace AutoReservation.BusinessLayer
     {
         private const string DateTimeFormat = "dd.MM.yyyy HH:mm:ss";
 
-        public List<Reservation> List
+        public List<Reservation> List(bool includeFinished = true)
         {
-            get
+            using (var context = new AutoReservationContext())
             {
-                using (var context = new AutoReservationContext())
-                {
-                    return context.Reservationen.Include(res => res.Auto).Include(res => res.Kunde).ToList();
-                }
+                return context.Reservationen.Include(res => res.Auto).Include(res => res.Kunde).Where(res => includeFinished || res.Bis > DateTime.Now).ToList();
             }
+            
         }
         
         public Reservation Find(int id)

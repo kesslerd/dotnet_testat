@@ -11,6 +11,7 @@
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
+            <CheckBox Content="{StaticResource reservation_include_finished}" IsChecked="{Binding ViewModel.IncludeFinished}"/>
         </StackPanel>
         <DataGrid AutoGenerateColumns="False"
                   IsReadOnly="True"

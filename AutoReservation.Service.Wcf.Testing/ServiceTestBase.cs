@@ -42,6 +42,34 @@ namespace AutoReservation.Service.Wcf.Testing
             Assert.IsTrue(Target.GetReservations().Any());
         }
 
+        [TestMethod]
+        public void doNotIncludeFinishedReservations()
+        {
+
+            ReservationDto reservation = new ReservationDto
+            {
+                ReservationsNr = 4,
+                Von = new DateTime(2017, 01, 01),
+                Bis = new DateTime(2017, 01, 02),
+                Auto = Target.GetAuto(1),
+                Kunde = Target.GetKunde(1)
+            };
+
+            Target.AddReservation(reservation);
+
+            int countAll = (from res in Target.GetReservations(true)
+                         where res.Bis <= DateTime.Now
+                         select res).Count();
+
+            int count = (from res in Target.GetReservations(false)
+                         where res.Bis <= DateTime.Now
+                         select res).Count();
+
+            Assert.AreNotEqual(countAll, count);
+
+
+        }
+
         #endregion
 
         #region Get by existing ID
