@@ -8,6 +8,7 @@ using System.Windows.Input;
 using static AutoReservation.UI.Service.Service;
 using System.ServiceModel;
 using AutoReservation.Common.DataTransferObjects.Faults;
+using System.Data.SqlTypes;
 
 namespace AutoReservation.UI.ViewModels
 {
@@ -72,6 +73,11 @@ namespace AutoReservation.UI.ViewModels
                 InvokeOnSaveError();
                 if (CanExecuteReloadCommand()) ReloadCommand.Execute(null);                        
             }
+        }
+
+        protected override bool CanExecuteSaveCommand()
+        {
+            return Nachname != null && Nachname.Trim().Length != 0 && Vorname != null && Vorname.Trim().Length != 0 && Geburtsdatum != null && Geburtsdatum > (DateTime)SqlDateTime.MinValue;
         }
 
         protected override void ExecuteReloadCommand()

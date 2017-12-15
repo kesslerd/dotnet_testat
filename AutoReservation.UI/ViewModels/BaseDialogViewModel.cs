@@ -15,10 +15,11 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand()));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand(), param => CanExecuteSaveCommand()));
         }
 
         protected abstract void ExecuteSaveCommand();
+        protected abstract bool CanExecuteSaveCommand();
 
         RelayCommand<object> _cancelCommand;
         public ICommand CancelCommand
