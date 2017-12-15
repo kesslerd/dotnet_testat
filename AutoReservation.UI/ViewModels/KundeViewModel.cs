@@ -55,6 +55,22 @@ namespace AutoReservation.UI.ViewModels
             set { kundeDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
         }
 
+        public override bool CanSafe
+        {
+            get
+            {
+                return Nachname != null && Nachname.Trim().Length != 0 && Vorname != null && Vorname.Trim().Length != 0 && Geburtsdatum != null && Geburtsdatum > (DateTime)SqlDateTime.MinValue;
+            }
+        }
+
+        public override bool CanReload
+        {
+            get
+            {
+                return RowVersion != null;
+            }
+        }
+
         protected override void ExecuteSaveCommand()
         {
             try { 
@@ -71,13 +87,8 @@ namespace AutoReservation.UI.ViewModels
             catch (FaultException<DataManipulationFault>)
             {
                 InvokeOnSaveError();
-                if (CanExecuteReloadCommand()) ReloadCommand.Execute(null);                        
+                if (CanReload) ReloadCommand.Execute(null);                        
             }
-        }
-
-        protected override bool CanExecuteSaveCommand()
-        {
-            return Nachname != null && Nachname.Trim().Length != 0 && Vorname != null && Vorname.Trim().Length != 0 && Geburtsdatum != null && Geburtsdatum > (DateTime)SqlDateTime.MinValue;
         }
 
         protected override void ExecuteReloadCommand()
@@ -87,12 +98,8 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Vorname));
             OnPropertyChanged(nameof(Geburtsdatum));
             OnPropertyChanged(nameof(RowVersion));
-            OnPropertyChanged(nameof(CanExecuteReloadCommand));
-        }
-
-        protected override bool CanExecuteReloadCommand()
-        {
-            return RowVersion != null;
+            OnPropertyChanged(nameof(CanSafe));
+            OnPropertyChanged(nameof(CanReload));
         }
     }
 }

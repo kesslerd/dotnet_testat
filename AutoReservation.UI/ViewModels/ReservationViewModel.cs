@@ -69,17 +69,27 @@ namespace AutoReservation.UI.ViewModels
             set { reservationDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
         }
 
+        public override bool CanSafe
+        {
+            get
+            {
+                return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
+            }
+        }
+
+        public override bool CanReload
+        {
+            get
+            {
+                return RowVersion != null;
+            }
+        }
+
         public event EventHandler<EventHandler<object>> OnRequestSave;
-        public event EventHandler OnSaveError;
 
         protected override void ExecuteSaveCommand()
         {
             OnRequestSave?.Invoke(this.reservationDto, (caller, _) => { Save(this.reservationDto); });
-        }
-        
-        protected override bool CanExecuteSaveCommand()
-        {
-            return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
         }
 
         private void Save(ReservationDto reservation)
@@ -98,8 +108,8 @@ namespace AutoReservation.UI.ViewModels
             }
             catch (FaultException<DataManipulationFault>)
             {
-                OnSaveError?.Invoke(this, null);
-                if (CanExecuteReloadCommand()) ReloadCommand.Execute(null);
+                InvokeOnSaveError();
+                if (CanReload) ReloadCommand.Execute(null);
             }
         }
         
@@ -116,13 +126,8 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Von));
             OnPropertyChanged(nameof(Bis));
             OnPropertyChanged(nameof(RowVersion));
-            OnPropertyChanged(nameof(CanExecuteReloadCommand));
             OnPropertyChanged(nameof(CanSafe));
-        }
-
-        protected override bool CanExecuteReloadCommand()
-        {
-            return RowVersion != null;
+            OnPropertyChanged(nameof(CanReload));
         }
     }
 }

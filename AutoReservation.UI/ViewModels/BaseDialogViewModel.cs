@@ -9,17 +9,26 @@ namespace AutoReservation.UI.ViewModels
 {
     public abstract class BaseDialogViewModel : BaseViewModel
     {
+        public abstract bool CanSafe
+        {
+            get;
+        }
+
+        public abstract bool CanReload
+        {
+            get;
+        }
+
         public event EventHandler OnRequestClose;
         public event EventHandler OnSaveError;
 
         RelayCommand<object> _saveCommand;
         public ICommand SaveCommand
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand(), param => CanExecuteSaveCommand()));
+            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand(), param => CanSafe));
         }
 
         protected abstract void ExecuteSaveCommand();
-        protected abstract bool CanExecuteSaveCommand();
 
         RelayCommand<object> _cancelCommand;
         public ICommand CancelCommand
@@ -35,11 +44,10 @@ namespace AutoReservation.UI.ViewModels
         RelayCommand<object> _reloadCommand;
         public ICommand ReloadCommand
         {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand()));
+            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanReload));
         }
 
         protected abstract void ExecuteReloadCommand();
-        protected abstract bool CanExecuteReloadCommand();
 
         protected virtual void InvokeOnRequestClose(EventArgs e = null)
         {
