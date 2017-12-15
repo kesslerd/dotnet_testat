@@ -7,7 +7,7 @@
         xmlns:viewmodels="clr-namespace:AutoReservation.UI.ViewModels"
         xmlns:dateRules="clr-namespace:AutoReservation.UI.ViewModels.Util"
         mc:Ignorable="d"
-        Title="Reservation" Height="225" Width="360" MinHeight="225" MinWidth="360">
+        Title="Reservation" Height="235" Width="360" MinHeight="235" MinWidth="360">
     <StackPanel>
         <Grid Margin="10 10 10 10" MaxHeight="148">
             <Grid.RowDefinitions>

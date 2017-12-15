@@ -6,7 +6,8 @@
         xmlns:local="clr-namespace:AutoReservation.UI"
         xmlns:localViews="clr-namespace:AutoReservation.UI.Views"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="525">
+        Title="MainWindow" Height="350" MinWidth="550" Width="650"
+        Language="de-CH">
     <Grid>
         <TabControl>
             <TabItem Header="Kunden">

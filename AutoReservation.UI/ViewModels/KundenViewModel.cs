@@ -12,13 +12,8 @@ using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class KundenViewModel : BaseViewModel
+    public class KundenViewModel : BaseTabViewModel<KundeDto>
     {
-        public KundenViewModel()
-        {
-            executeRefreshCommand();
-        }
-
         private List<KundeDto> _kunden;
         public List<KundeDto> Kunden
         {
@@ -33,47 +28,12 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public event EventHandler<int> OnRequestEditKunde;
-        public event EventHandler<object> OnRequestCreateKunde;
-        public event EventHandler<EventHandler<bool>> OnRequestDelete;
-        public event EventHandler<object> OnDeleteKundeFailed;
-
-
-        #region commands
-        RelayCommand<object> _refreshCommand;
-        public ICommand RefreshCommand
-        {
-            get => _refreshCommand ?? (_refreshCommand = new RelayCommand<object>(param => this.executeRefreshCommand()));
-        }
-
-        private void executeRefreshCommand()
+        protected override void ExecuteRefreshCommand()
         {
             Kunden = AutoReservationService.GetKunden();
         }
 
-        RelayCommand<object> _addCommand;
-        public ICommand AddCommand
-        {
-            get => _addCommand ?? (_addCommand = new RelayCommand<object>(param => this.executeAddCommand()));
-        }
-
-        private void executeAddCommand()
-        {
-            OnRequestCreateKunde?.Invoke(this, null);
-        }
-
-        RelayCommand<KundeDto> _deleteCommand;
-        public ICommand DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new RelayCommand<KundeDto>(param => this.executeDeleteCommand(param)));
-        }
-
-        private void executeDeleteCommand(KundeDto kunde)
-        {
-            OnRequestDelete?.Invoke(this, (caller,ok)=> { if (ok) delete(kunde); });
-        }
-
-        private void delete(KundeDto kunde)
+        protected override void Delete(KundeDto kunde)
         {
             try
             {
@@ -81,22 +41,9 @@ namespace AutoReservation.UI.ViewModels
             }
             catch (FaultException<DataManipulationFault>)
             {
-                OnDeleteKundeFailed?.Invoke(this, null);
+                InvokeOnRequestDeleteFailed();
             }
             RefreshCommand.Execute(null);
         }
-
-        RelayCommand<int> _editCommand;
-        public ICommand EditCommand
-        {
-            get => _editCommand ?? (_editCommand = new RelayCommand<int>(param => this.executeEditCommand(param)));
-        }
-
-        private void executeEditCommand(int id)
-        {
-            OnRequestEditKunde?.Invoke(this, id);
-        }
-
-        #endregion
     }
 }

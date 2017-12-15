@@ -35,9 +35,12 @@
     <system:String x:Key="message_error_save_resetvation_title">Error: Reservation kann nicht gespeichert werden</system:String>
     <system:String x:Key="message_error_delete_reservation_message">Der Reservation konnte nicht gelöscht werden. Kunde wurde neu geladen, bitte erneut löschen</system:String>
     <system:String x:Key="message_error_delete_reservation_title">Error: Reservation kann nicht gelöscht werden</system:String>
+    <system:String x:Key="message_error_save_auto_message">Das Auto konnte nicht gespeichert werden. Auto wurde neu geladen, bitte erneut ändern</system:String>
+    <system:String x:Key="message_error_save_auto_title">Error: Auto kann nicht gespeichert werden</system:String>
+    <system:String x:Key="message_error_delete_auto_message">Das Auto konnte nicht gelöscht werden. Auto wurde neu geladen, bitte erneut löschen</system:String>
+    <system:String x:Key="message_error_delete_auto_title">Error: Auto kann nicht gelöscht werden</system:String>
 
     <system:String x:Key="validation_date_too_old">Datum muss älter als {minDate} sein.</system:String>
     <system:String x:Key="validation_date_too_far">Datum muss vor {maxDate} sein.</system:String>
     <system:String x:Key="validation_date_not_valid">Datum nicht gültig.</system:String>
-
 </ResourceDictionary>

@@ -12,14 +12,8 @@ using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class AutosViewModel : BaseViewModel
+    public class AutosViewModel : BaseTabViewModel<AutoDto>
     {
-
-        public AutosViewModel()
-        {
-            ExecuteRefreshCommand();
-        }
-
         private List<AutoDto> _autos;
         public List<AutoDto> Autos
         {
@@ -34,71 +28,21 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public event EventHandler<int> OnRequestEditAuto;
-        public event EventHandler<object> OnRequestCreateAuto;
-        public event EventHandler<EventHandler<bool>> OnRequestDeleteAuto;
-        public event EventHandler<object> OnRequestDeleteFailed;
-
-        #region commands
-
-        RelayCommand<object> _refreshCommand;
-
-        public ICommand RefreshCommand
-        {
-            get => _refreshCommand ?? (_refreshCommand = new RelayCommand<object>(param => this.ExecuteRefreshCommand()));
-        }
-
-        private void ExecuteRefreshCommand()
+        protected override void ExecuteRefreshCommand()
         {
             Autos = AutoReservationService.GetAutos();
         }
 
-        RelayCommand<object> _addCommand;
-        public ICommand AddCommand
-            {
-            get => _addCommand ?? (_addCommand = new RelayCommand<object>(param => ExecuteAddCommand()));
-            }
-
-        private void ExecuteAddCommand()
-        {
-            OnRequestCreateAuto?.Invoke(this, null);
-        }
-
-        RelayCommand<AutoDto> _deleteCommand;
-        public ICommand DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new RelayCommand<AutoDto>(param => ExecuteDeleteCommand(param)));
-        }
-
-        private void ExecuteDeleteCommand(AutoDto auto)
-        {
-            OnRequestDeleteAuto?.Invoke(this, (caller, ok) => { if (ok) Delete(auto); });
-        }
-
-        private void Delete(AutoDto auto)
+        protected override void Delete(AutoDto auto)
         {
             try
             {
                 AutoReservationService.DeleteAuto(auto);
             } catch (FaultException<DataManipulationFault> e)
             {
-                OnRequestDeleteFailed?.Invoke(this, null);
+                InvokeOnRequestDeleteFailed();
             }
             RefreshCommand.Execute(null);
         }
-
-        RelayCommand<int> _editCommand;
-        public ICommand EditCommand
-        {
-            get => _editCommand ?? (_editCommand = new RelayCommand<int>(param => this.ExecuteEditCommand(param)));
-        }
-
-        private void ExecuteEditCommand(int id)
-        {
-            OnRequestEditAuto?.Invoke(this, id);
-        }
-
-        #endregion
-
     }
 }

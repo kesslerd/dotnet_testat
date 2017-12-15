@@ -106,25 +106,28 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-
+        /// <summary>
+        /// Creates a query to check the availability of a car within the given date range.
+        /// </summary>
+        /// <param name="autoId"></param>
+        /// <param name="von"></param>
+        /// <param name="bis"></param>
+        /// <param name="context"></param>
+        /// <returns>query</returns>
         private IQueryable<Reservation> CreateAvailabilityQuery(int autoId, DateTime von, DateTime bis, AutoReservationContext context = null)
         {
-
             if (context == null)
             {
                 context = new AutoReservationContext();
             }
-            
-                return (from r in context.Reservationen
-                             where (
-                                 (von <= r.Von && bis >= r.Bis) ||
-                                 (von <= r.Von && bis >= r.Von) ||
-                                 (von >= r.Von && bis <= r.Bis) ||
-                                 (von <= r.Bis && bis >= r.Bis)
-                             ) && autoId == r.AutoId
-                             select r
-                            );
-            
+            return (from r in context.Reservationen
+                    where (
+                        (von <= r.Von && bis >= r.Bis) ||
+                        (von <= r.Von && bis >= r.Von) ||
+                        (von >= r.Von && bis <= r.Bis) ||
+                        (von <= r.Bis && bis >= r.Bis)
+                    ) && autoId == r.AutoId
+                    select r);
         }
 
         /// <summary>
@@ -157,7 +160,5 @@ namespace AutoReservation.BusinessLayer
         }
 
     }
-
- 
 
 }

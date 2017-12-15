@@ -63,6 +63,8 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Service\Service.cs" />
+    <Compile Include="ViewModels\BaseDialogViewModel.cs" />
+    <Compile Include="ViewModels\BaseTabViewModel.cs" />
     <Compile Include="ViewModels\AutosViewModel.cs" />
     <Compile Include="ViewModels\AutoViewModel.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
