@@ -59,7 +59,7 @@ namespace AutoReservation.Common.Interfaces
         ReservationDto GetReservation(int id);
 
         [OperationContract]
-        List<ReservationDto> GetReservations();
+        List<ReservationDto> GetReservations(bool includeFinished = true);
 
         [OperationContract]
         [FaultContract(typeof(DataManipulationFault))]

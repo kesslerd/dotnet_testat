@@ -8,11 +8,17 @@ using AutoReservation.Common.DataTransferObjects.Faults;
 using static AutoReservation.UI.Service.Service;
 using System.Windows.Input;
 using System.ServiceModel;
+using System.Windows.Threading;
 
 namespace AutoReservation.UI.ViewModels
 {
     public class ReservationenViewModel : BaseTabViewModel<ReservationDto>
     {
+        public ReservationenViewModel()
+        {
+            StartDispatcher();
+        }
+
         private List<ReservationDto> _reservationen;
         public List<ReservationDto> Reservationen
         {
@@ -26,10 +32,25 @@ namespace AutoReservation.UI.ViewModels
                 OnPropertyChanged(nameof(Reservationen));
             }
         }
+        
+        private bool _includeFinished = true;
+        public bool IncludeFinished
+        {
+            get
+            {
+                return _includeFinished;
+            }
+            set
+            {
+                _includeFinished = value;
+                ExecuteRefreshCommand();
+                OnPropertyChanged(nameof(IncludeFinished));
+            }
+        }
 
         protected override void ExecuteRefreshCommand()
         {
-            Reservationen = AutoReservationService.GetReservations();
+            Reservationen = AutoReservationService.GetReservations(IncludeFinished);
         }
 
         protected override void Delete(ReservationDto reservation)
@@ -43,6 +64,14 @@ namespace AutoReservation.UI.ViewModels
                 InvokeOnRequestDeleteFailed();
             }
             RefreshCommand.Execute(null);
+        }
+
+        private void StartDispatcher()
+        {
+            var dispatcher = new DispatcherTimer();
+            dispatcher.Tick += (sender, arg) => ExecuteRefreshCommand();
+            dispatcher.Interval = new TimeSpan(0, 0, 30);
+            dispatcher.Start();
         }
     }
 }
