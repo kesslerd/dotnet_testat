@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
+        xmlns:dateRules="clr-namespace:AutoReservation.UI.ViewModels.Util"
         d:DataContext="{d:DesignInstance local:Kunde}"
         mc:Ignorable="d"
         Title="Kunde" Height="200" Width="360" MinHeight="200" MinWidth="360">
@@ -24,8 +25,16 @@
 
             <TextBox Name="FirstNameInput" Text ="{Binding ViewModel.Vorname, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
             <TextBox Name="LastNameInput" Text ="{Binding ViewModel.Nachname, Mode=TwoWay}" Grid.Row="1" Grid.Column="1" Margin="0 0 0 3"/>
-            <!-- TODO MAX Date today-->
-            <DatePicker Grid.Row="2" SelectedDate="{Binding Path=ViewModel.Geburtsdatum, Mode=TwoWay}"  Grid.Column="1" Padding="5" Margin="0 0 0 3" />
+            <DatePicker Grid.Row="2"  Grid.Column="1" Padding="5" Margin="0 0 0 3" >
+                <DatePicker.SelectedDate>
+                    <Binding Path="ViewModel.Geburtsdatum" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <dateRules:SQLDateRangeValidationRule />
+                            <dateRules:NoFutureDateValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </DatePicker.SelectedDate>
+            </DatePicker>
         </Grid>
         <StackPanel Orientation="Horizontal">
             <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}' IsEnabled="{Binding ViewModel.CanSafe}"/>

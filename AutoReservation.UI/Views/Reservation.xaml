@@ -5,6 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         xmlns:viewmodels="clr-namespace:AutoReservation.UI.ViewModels"
+        xmlns:dateRules="clr-namespace:AutoReservation.UI.ViewModels.Util"
         mc:Ignorable="d"
         Title="Reservation" Height="235" Width="360" MinHeight="235" MinWidth="360">
     <StackPanel>
@@ -53,8 +54,26 @@
                 </ComboBox.ItemTemplate>
             </ComboBox>
             <!-- TODO Min Date today-->
-            <DatePicker Grid.Row="2" SelectedDate="{Binding Path=ViewModel.Von, Mode=TwoWay}" Grid.Column="1" Padding="5" Margin="0 0 0 3" />
-            <DatePicker Grid.Row="3" SelectedDate="{Binding Path=ViewModel.Bis, Mode=TwoWay}" Grid.Column="1" Padding="5" Margin="0 0 0 3" />
+            <DatePicker Grid.Row="2" Grid.Column="1" Padding="5" Margin="0 0 0 3">
+                <DatePicker.SelectedDate>
+                    <Binding Path="ViewModel.Von" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <dateRules:SQLDateRangeValidationRule />
+                            <dateRules:MustBeFutureDateValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </DatePicker.SelectedDate>
+            </DatePicker>
+            <DatePicker Grid.Row="3" Grid.Column="1" Padding="5" Margin="0 0 0 3">
+                <DatePicker.SelectedDate>
+                    <Binding Path="ViewModel.Bis" Mode="TwoWay">
+                        <Binding.ValidationRules>
+                            <dateRules:SQLDateRangeValidationRule />
+                            <dateRules:MustBeFutureDateValidationRule />
+                        </Binding.ValidationRules>
+                    </Binding>
+                </DatePicker.SelectedDate>
+            </DatePicker>
         </Grid>
         <StackPanel Orientation="Horizontal">
             <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}' IsEnabled="{Binding ViewModel.CanSafe}"/>

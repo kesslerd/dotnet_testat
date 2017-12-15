@@ -6,12 +6,6 @@ namespace AutoReservation.Common.DataTransferObjects
     [DataContract]
     public class KundeDto
     {
-
-        public KundeDto()
-        {
-            Geburtsdatum = DateTime.Now;
-        }
-
         [DataMember]
         public int Id { get; set; }
         [DataMember]
