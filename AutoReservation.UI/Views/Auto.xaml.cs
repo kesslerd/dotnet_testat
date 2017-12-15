@@ -26,8 +26,11 @@ namespace AutoReservation.UI.Views
         public Auto(int autoId = -1)
         {
             InitializeComponent();
+
             ViewModel = new AutoViewModel(autoId);
             ViewModel.OnRequestClose += (s, e) => this.Close();
+            ViewModel.OnSaveError += (s, e) => MessageBox.Show((string)Application.Current.TryFindResource("message_error_save_auto_message"), (string)Application.Current.TryFindResource("message_error_save_auto_title"), MessageBoxButton.OK, MessageBoxImage.Error);
+
             DataContext = this;
         }
     }

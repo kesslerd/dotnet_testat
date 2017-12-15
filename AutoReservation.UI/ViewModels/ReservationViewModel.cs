@@ -12,7 +12,7 @@ using System.Data.SqlTypes;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class ReservationViewModel : BaseViewModel
+    public class ReservationViewModel : BaseDialogViewModel
     {
         private ReservationDto reservationDto = new ReservationDto();
 
@@ -69,7 +69,7 @@ namespace AutoReservation.UI.ViewModels
             set { reservationDto.RowVersion = value; OnPropertyChanged(nameof(RowVersion)); }
         }
 
-        public bool CanSafe
+        public override bool CanSafe
         {
             get
             {
@@ -77,21 +77,19 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public event EventHandler OnRequestClose;
-        public event EventHandler<EventHandler<object>> OnRequestSave;
-        public event EventHandler OnSaveError;
-
-        #region commands
-
-        RelayCommand<ReservationDto> _saveCommand;
-        public ICommand SaveCommand
+        public override bool CanReload
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<ReservationDto>(param => this.ExecuteSaveCommand(reservationDto), param => CanSafe));
+            get
+            {
+                return RowVersion != null;
+            }
         }
 
-        private void ExecuteSaveCommand(ReservationDto reservation)
+        public event EventHandler<EventHandler<object>> OnRequestSave;
+
+        protected override void ExecuteSaveCommand()
         {
-            OnRequestSave?.Invoke(reservation, (caller, _) => { Save(reservation); });
+            OnRequestSave?.Invoke(this.reservationDto, (caller, _) => { Save(this.reservationDto); });
         }
 
         private void Save(ReservationDto reservation)
@@ -106,33 +104,16 @@ namespace AutoReservation.UI.ViewModels
                 {
                     AutoReservationService.AddReservation(reservation);
                 }
-                OnRequestClose?.Invoke(this, null);
+                InvokeOnRequestClose();
             }
             catch (FaultException<DataManipulationFault>)
             {
-                OnSaveError?.Invoke(this, null);
-                if (CanExecuteReloadCommand) ReloadCommand.Execute(null);
+                InvokeOnSaveError();
+                if (CanReload) ReloadCommand.Execute(null);
             }
         }
-
-        RelayCommand<object> _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.ExecuteCancelCommand()));
-        }
-
-        private void ExecuteCancelCommand()
-        {
-            OnRequestClose?.Invoke(this, null);
-        }
-
-        RelayCommand<object> _reloadCommand;
-        public ICommand ReloadCommand
-        {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand));
-        }
-
-        private void ExecuteReloadCommand()
+        
+        protected override void ExecuteReloadCommand()
         {
             this.reservationDto = AutoReservationService.GetReservation(this.ReservationsNr);
 
@@ -145,16 +126,8 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Von));
             OnPropertyChanged(nameof(Bis));
             OnPropertyChanged(nameof(RowVersion));
-            OnPropertyChanged(nameof(CanExecuteReloadCommand));
             OnPropertyChanged(nameof(CanSafe));
+            OnPropertyChanged(nameof(CanReload));
         }
-
-        public bool CanExecuteReloadCommand
-        {
-            get => RowVersion != null;
-            private set { }
-        }
-
-        #endregion
     }
 }
