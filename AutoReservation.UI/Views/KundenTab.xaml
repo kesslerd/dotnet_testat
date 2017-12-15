@@ -5,9 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AutoReservation.UI.Views"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300" 
-             d:DataContext="{d:DesignInstance local:KundenTab}" >
-    <DockPanel>
+             d:DesignHeight="300" d:DesignWidth="450"
+             d:DataContext="{d:DesignInstance local:KundenTab}">
+    <DockPanel HorizontalAlignment="Stretch">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
@@ -17,16 +17,16 @@
                   ItemsSource="{Binding ViewModel.Kunden}"
                   HorizontalContentAlignment="Stretch"
                   VerticalAlignment="Stretch"
-                  Height="auto"
+                  Height="Auto"
                   ScrollViewer.CanContentScroll="True" 
                   ScrollViewer.VerticalScrollBarVisibility="Auto"
                   ScrollViewer.HorizontalScrollBarVisibility="Auto">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="{StaticResource kunde_header_firstname}" Binding="{Binding Vorname}" />
-                <DataGridTextColumn Header="{StaticResource kunde_header_lastname}" Binding="{Binding Nachname}" />
-                <DataGridTextColumn Header="{StaticResource kunde_header_birthday}" Binding="{Binding Geburtsdatum, StringFormat=d}" />
-                <DataGridTemplateColumn>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                <DataGridTextColumn Header="{StaticResource kunde_header_firstname}" Binding="{Binding Vorname}" Width="0.6*"/>
+                <DataGridTextColumn Header="{StaticResource kunde_header_lastname}" Binding="{Binding Nachname}" Width="0.6*"/>
+                <DataGridTextColumn Header="{StaticResource kunde_header_birthday}" Binding="{Binding Geburtsdatum, StringFormat=d}" Width="0.6*" />
+                <DataGridTemplateColumn Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>

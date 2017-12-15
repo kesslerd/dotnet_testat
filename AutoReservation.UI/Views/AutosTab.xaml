@@ -16,12 +16,12 @@
                   IsReadOnly="True"
                   ItemsSource="{Binding ViewModel.Autos}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding Id}" />
-                <DataGridTextColumn Header="{StaticResource auto_header_marke}" Binding="{Binding Marke}" />
-                <DataGridTextColumn Header="{StaticResource auto_header_basistarif}" Binding="{Binding Basistarif, StringFormat=d}" />
-                <DataGridTextColumn Header="{StaticResource auto_header_tagestarif}" Binding="{Binding Tagestarif, StringFormat=d}" />
-                <DataGridTextColumn Header="{StaticResource auto_header_autoklasse}" Binding="{Binding AutoKlasse}" />
-                <DataGridTemplateColumn>
+                <DataGridTextColumn Header="ID" Binding="{Binding Id}" Width="40"/>
+                <DataGridTextColumn Header="{StaticResource auto_header_marke}" Binding="{Binding Marke}" Width="0.4*"/>
+                <DataGridTextColumn Header="{StaticResource auto_header_basistarif}" Binding="{Binding Basistarif, StringFormat=d}" Width="0.3*"/>
+                <DataGridTextColumn Header="{StaticResource auto_header_tagestarif}" Binding="{Binding Tagestarif, StringFormat=d}" Width="0.3*"/>
+                <DataGridTextColumn Header="{StaticResource auto_header_autoklasse}" Binding="{Binding AutoKlasse}" Width="0.4*"/>
+                <DataGridTemplateColumn Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>

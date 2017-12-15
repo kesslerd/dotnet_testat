@@ -11,7 +11,7 @@ using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class AutoViewModel : BaseViewModel
+    public class AutoViewModel : BaseDialogViewModel
     {
         private AutoDto autoDto = new AutoDto();
 
@@ -27,41 +27,25 @@ namespace AutoReservation.UI.ViewModels
         public int Id
         {
             get { return autoDto.Id; }
-            set
-            {
-                autoDto.Id = value;
-                OnPropertyChanged(nameof(Id));
-            }
+            set { autoDto.Id = value; OnPropertyChanged(nameof(Id)); }
         }
 
         public String Marke
         {
             get { return autoDto.Marke; }
-            set
-            {
-                autoDto.Marke = value;
-                OnPropertyChanged(nameof(Marke));
-            }
+            set { autoDto.Marke = value; OnPropertyChanged(nameof(Marke)); OnPropertyChanged(nameof(CanSafe)); }
         }
 
         public int Basistarif
         {
             get { return autoDto.Basistarif; }
-            set
-            {
-                autoDto.Basistarif = value;
-                OnPropertyChanged(nameof(Basistarif));
-            }
+            set { autoDto.Basistarif = value; OnPropertyChanged(nameof(Basistarif)); }
         }
 
         public int Tagestarif
         {
             get { return autoDto.Tagestarif; }
-            set
-            {
-                autoDto.Tagestarif = value;
-                OnPropertyChanged(nameof(Tagestarif));
-            }
+            set { autoDto.Tagestarif = value; OnPropertyChanged(nameof(Tagestarif)); }
         }
 
         public AutoKlasse AutoKlasse
@@ -71,6 +55,7 @@ namespace AutoReservation.UI.ViewModels
             {
                 autoDto.AutoKlasse = value;
                 OnPropertyChanged(nameof(AutoKlasse));
+                OnPropertyChanged(nameof(CanSafe));
             }
         }
         
@@ -89,18 +74,23 @@ namespace AutoReservation.UI.ViewModels
             get => RowVersion == null;
         }
 
-        public event EventHandler OnRequestClose;
-        public event EventHandler OnSaveError;
-
-        #region commands
-
-        RelayCommand<object> _saveCommand;
-        public ICommand SaveCommand
+        public override bool CanSafe
         {
-            get => _saveCommand ?? (_saveCommand = new RelayCommand<object>(param => this.ExecuteSaveCommand()));
+            get
+            {
+                return Marke != null && Marke.Trim().Length != 0 && AutoKlasse != null;
+            }
         }
 
-        private void ExecuteSaveCommand()
+        public override bool CanReload
+        {
+            get
+            {
+                return RowVersion != null;
+            }
+        }
+
+        protected override void ExecuteSaveCommand()
         {
             try
             {
@@ -112,48 +102,24 @@ namespace AutoReservation.UI.ViewModels
                 {
                     AutoReservationService.AddAuto(this.autoDto);
                 }
-                OnRequestClose?.Invoke(this, null);
+                InvokeOnRequestClose();
             }
             catch (FaultException<DataManipulationFault> e)
             {
-                OnSaveError?.Invoke(this, null);
-                if (CanExecuteReloadCommand) ReloadCommand.Execute(null);
+                InvokeOnSaveError();
+                if (CanReload) ReloadCommand.Execute(null);
             }
         }
 
-        RelayCommand<object> _cancelCommand;
-        public ICommand CancelCommand
-        {
-            get => _cancelCommand ?? (_cancelCommand = new RelayCommand<object>(param => this.ExecuteCancelCommand()));
-        }
-
-        private void ExecuteCancelCommand()
-        {
-            OnRequestClose?.Invoke(this, null);
-        }
-
-        RelayCommand<object> _reloadCommand;
-        public ICommand ReloadCommand
-        {
-            get => _reloadCommand ?? (_reloadCommand = new RelayCommand<object>(param => this.ExecuteReloadCommand(), param => CanExecuteReloadCommand));
-        }
-
-        private void ExecuteReloadCommand()
+        protected override void ExecuteReloadCommand()
         {
             this.autoDto = AutoReservationService.GetAuto(this.Id);
             OnPropertyChanged(nameof(Marke));
             OnPropertyChanged(nameof(Basistarif));
             OnPropertyChanged(nameof(Tagestarif));
             OnPropertyChanged(nameof(AutoKlasse));
+            OnPropertyChanged(nameof(CanSafe));
             OnPropertyChanged(nameof(RowVersion));
         }
-
-        public bool CanExecuteReloadCommand
-        {
-            get => RowVersion != null;
-            private set { }
-        }
-
-        #endregion
     }
 }

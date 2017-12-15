@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         mc:Ignorable="d"
-        Title="Auto" Height="0.11" Width="241.6" MinHeight="168.4" MinWidth="312.8">
+        Title="Auto" Height="235" Width="360" MinHeight="235" MinWidth="360">
     <StackPanel>
         <Grid Margin="10 10 10 10" MaxHeight="148">
             <Grid.RowDefinitions>
@@ -47,7 +47,7 @@
 
         </Grid>
         <StackPanel Orientation="Horizontal">
-            <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}'/>
+            <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}' IsEnabled="{Binding ViewModel.CanSafe}"/>
             <Button Content="{StaticResource action_cancel}"  Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
             <Button Content="{StaticResource action_reload}"  Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
 
