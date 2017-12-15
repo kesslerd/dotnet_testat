@@ -82,11 +82,6 @@ namespace AutoReservation.UI.ViewModels
             return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
         }
 
-        protected override bool CanExecuteSaveCommand()
-        {
-            return SelectedKunde != null && SelectedAuto != null && Von != null && Von > (DateTime)SqlDateTime.MinValue && Bis != null && Bis > (DateTime)SqlDateTime.MinValue;
-        }
-
         private void Save(ReservationDto reservation)
         {
             try

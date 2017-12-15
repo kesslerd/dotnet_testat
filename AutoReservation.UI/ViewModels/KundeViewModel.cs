@@ -86,7 +86,6 @@ namespace AutoReservation.UI.ViewModels
             OnPropertyChanged(nameof(Nachname));
             OnPropertyChanged(nameof(Vorname));
             OnPropertyChanged(nameof(Geburtsdatum));
-            OnPropertyChanged(nameof(CanSafe));
             OnPropertyChanged(nameof(RowVersion));
             OnPropertyChanged(nameof(CanExecuteReloadCommand));
         }
