@@ -14,15 +14,13 @@ namespace AutoReservation.BusinessLayer
     {
         private const string DateTimeFormat = "dd.MM.yyyy HH:mm:ss";
 
-        public List<Reservation> List
+        public List<Reservation> List(bool includeFinished = true)
         {
-            get
+            using (var context = new AutoReservationContext())
             {
-                using (var context = new AutoReservationContext())
-                {
-                    return context.Reservationen.Include(res => res.Auto).Include(res => res.Kunde).ToList();
-                }
+                return context.Reservationen.Include(res => res.Auto).Include(res => res.Kunde).Where(res => includeFinished || res.Bis > DateTime.Now).ToList();
             }
+            
         }
         
         public Reservation Find(int id)
@@ -41,7 +39,6 @@ namespace AutoReservation.BusinessLayer
                 CheckAvailability(reservation);
 
                 context.Entry(reservation).State = EntityState.Added;
-                context.Reservationen.Add(reservation);
                 context.SaveChanges();
             }
         }
@@ -109,25 +106,28 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-
+        /// <summary>
+        /// Creates a query to check the availability of a car within the given date range.
+        /// </summary>
+        /// <param name="autoId"></param>
+        /// <param name="von"></param>
+        /// <param name="bis"></param>
+        /// <param name="context"></param>
+        /// <returns>query</returns>
         private IQueryable<Reservation> CreateAvailabilityQuery(int autoId, DateTime von, DateTime bis, AutoReservationContext context = null)
         {
-
             if (context == null)
             {
                 context = new AutoReservationContext();
             }
-            
-                return (from r in context.Reservationen
-                             where (
-                                 (von <= r.Von && bis >= r.Bis) ||
-                                 (von <= r.Von && bis >= r.Von) ||
-                                 (von >= r.Von && bis <= r.Bis) ||
-                                 (von <= r.Bis && bis >= r.Bis)
-                             ) && autoId == r.AutoId
-                             select r
-                            );
-            
+            return (from r in context.Reservationen
+                    where (
+                        (von <= r.Von && bis >= r.Bis) ||
+                        (von <= r.Von && bis >= r.Von) ||
+                        (von >= r.Von && bis <= r.Bis) ||
+                        (von <= r.Bis && bis >= r.Bis)
+                    ) && autoId == r.AutoId
+                    select r);
         }
 
         /// <summary>
@@ -160,7 +160,5 @@ namespace AutoReservation.BusinessLayer
         }
 
     }
-
- 
 
 }

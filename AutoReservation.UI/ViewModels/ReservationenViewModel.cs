@@ -8,14 +8,15 @@ using AutoReservation.Common.DataTransferObjects.Faults;
 using static AutoReservation.UI.Service.Service;
 using System.Windows.Input;
 using System.ServiceModel;
+using System.Windows.Threading;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class ReservationenViewModel : BaseViewModel
+    public class ReservationenViewModel : BaseTabViewModel<ReservationDto>
     {
         public ReservationenViewModel()
         {
-            ExecuteRefreshCommand();
+            StartDispatcher();
         }
 
         private List<ReservationDto> _reservationen;
@@ -32,47 +33,27 @@ namespace AutoReservation.UI.ViewModels
             }
         }
 
-        public event EventHandler<int> OnRequestEdit;
-        public event EventHandler<object> OnRequestCreate;
-        public event EventHandler<EventHandler<bool>> OnRequestDelete;
-        public event EventHandler<object> OnRequestDeleteFailed;
-
-        #region commands
-
-        RelayCommand<object> _refreshCommand;
-        public ICommand RefreshCommand
+        private bool _includeFinished = true;
+        public bool IncludeFinished
         {
-            get => _refreshCommand ?? (_refreshCommand = new RelayCommand<object>(param => this.ExecuteRefreshCommand()));
+            get
+            {
+                return _includeFinished;
+            }
+            set
+            {
+                _includeFinished = value;
+                ExecuteRefreshCommand();
+                OnPropertyChanged(nameof(IncludeFinished));
+            }
         }
 
-        private void ExecuteRefreshCommand()
+        protected override void ExecuteRefreshCommand()
         {
-            Reservationen = AutoReservationService.GetReservations();
+            Reservationen = AutoReservationService.GetReservations(IncludeFinished);
         }
 
-        RelayCommand<object> _addCommand;
-        public ICommand AddCommand
-        {
-            get => _addCommand ?? (_addCommand = new RelayCommand<object>(param => this.ExecuteAddCommand()));
-        }
-
-        private void ExecuteAddCommand()
-        {
-            OnRequestCreate?.Invoke(this, null);
-        }
-
-        RelayCommand<ReservationDto> _deleteCommand;
-        public ICommand DeleteCommand
-        {
-            get => _deleteCommand ?? (_deleteCommand = new RelayCommand<ReservationDto>(param => this.ExecuteDeleteCommand(param)));
-        }
-
-        private void ExecuteDeleteCommand(ReservationDto reservation)
-        {
-            OnRequestDelete?.Invoke(this, (caller, ok) => { if (ok) Delete(reservation); });
-        }
-
-        private void Delete(ReservationDto reservation)
+        protected override void Delete(ReservationDto reservation)
         {
             try
             {
@@ -80,23 +61,17 @@ namespace AutoReservation.UI.ViewModels
             }
             catch (FaultException<DataManipulationFault>)
             {
-                OnRequestDeleteFailed?.Invoke(this, null);
+                InvokeOnRequestDeleteFailed();
             }
-
             RefreshCommand.Execute(null);
         }
 
-        RelayCommand<int> _editCommand;
-        public ICommand EditCommand
+        private void StartDispatcher()
         {
-            get => _editCommand ?? (_editCommand = new RelayCommand<int>(param => this.ExecuteEditCommand(param)));
+            var dispatcher = new DispatcherTimer();
+            dispatcher.Tick += (sender, arg) => ExecuteRefreshCommand();
+            dispatcher.Interval = new TimeSpan(0, 0, 30);
+            dispatcher.Start();
         }
-
-        private void ExecuteEditCommand(int id)
-        {
-            OnRequestEdit?.Invoke(this, id);
-        }
-
-        #endregion
     }
 }

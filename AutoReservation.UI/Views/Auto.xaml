@@ -1,0 +1,56 @@
+﻿<Window x:Class="AutoReservation.UI.Views.Auto"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoReservation.UI.Views"
+        mc:Ignorable="d"
+        Title="Auto" Height="235" Width="360" MinHeight="235" MinWidth="360">
+    <StackPanel>
+        <Grid Margin="10 10 10 10" MaxHeight="148">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+                <RowDefinition Height="10*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="40*" />
+                <ColumnDefinition Width="60*" />
+            </Grid.ColumnDefinitions>
+            <Label Content="{StaticResource auto_header_marke}" Grid.Row="0"/>
+            <Label Content="{StaticResource auto_header_basistarif}" Grid.Row="2"/>
+            <Label Content="{StaticResource auto_header_tagestarif}" Grid.Row="3"/>
+            <Label Content="{StaticResource auto_header_autoklasse}" Grid.Row="1"/>
+            <TextBox Name="MarkeInput" Text ="{Binding ViewModel.Marke, Mode=TwoWay}" Grid.Row="0" Grid.Column="1" Margin="0 0 0 3"/>
+            <TextBox Name="BasistarifInput" Text ="{Binding ViewModel.Basistarif, Mode=TwoWay}" Grid.Row="2" Grid.Column="1" Margin="0 0 0 3">
+                <TextBox.Style>
+                    <Style TargetType="TextBox" BasedOn="{StaticResource {x:Type TextBox}}">
+                        <Setter Property="IsEnabled" Value="False"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=SelectedValue, ElementName=AutoKlasseInput}" Value="Luxusklasse">
+                                <Setter Property="IsEnabled" Value="True"></Setter>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </TextBox.Style>
+            </TextBox>
+            <TextBox Name="TagestarifInput" Text ="{Binding ViewModel.Tagestarif, Mode=TwoWay}" Grid.Row="3" Grid.Column="1" Margin="0 0 0 3"/>
+            <ComboBox 
+                Name="AutoKlasseInput" 
+                ItemsSource="{Binding Source={StaticResource AutoKlasseEnum}}"
+                SelectedValue="{Binding ViewModel.AutoKlasse, Mode=TwoWay}"
+                Grid.Row="1" 
+                Grid.Column="1" 
+                Margin="0 0 0 3" 
+                IsEnabled="{Binding ViewModel.IsNew}"/>
+
+        </Grid>
+        <StackPanel Orientation="Horizontal">
+            <Button Content="{StaticResource action_save}" Margin="10" Command='{Binding ViewModel.SaveCommand}' IsEnabled="{Binding ViewModel.CanSafe}"/>
+            <Button Content="{StaticResource action_cancel}"  Margin="10" Command='{Binding ViewModel.CancelCommand}'/>
+            <Button Content="{StaticResource action_reload}"  Margin="10" Command='{Binding ViewModel.ReloadCommand}'/>
+
+        </StackPanel>
+    </StackPanel>
+</Window>

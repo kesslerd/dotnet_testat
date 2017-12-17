@@ -1,0 +1,16 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:AutoReservation.UI.Resources"
+                    xmlns:dto="clr-namespace:AutoReservation.Common.DataTransferObjects;assembly=AutoReservation.Common"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+
+    <ObjectDataProvider 
+        x:Key="AutoKlasseEnum"
+        MethodName="GetValues"
+        ObjectType="{x:Type sys:Enum}">
+        <ObjectDataProvider.MethodParameters>
+            <x:Type TypeName="dto:AutoKlasse" />
+        </ObjectDataProvider.MethodParameters>
+    </ObjectDataProvider>
+    
+</ResourceDictionary>

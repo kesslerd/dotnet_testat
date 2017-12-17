@@ -5,19 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:AutoReservation.UI.Views"
         mc:Ignorable="d"
-        d:DesignHeight="300" d:DesignWidth="300"
+        d:DesignHeight="300" d:DesignWidth="600"
         d:DataContext="{d:DesignInstance local:ReservationenTab}">
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Content="Refresh" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
             <Button Content="Hinzufügen"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
+            <CheckBox Content="{StaticResource reservation_include_finished}" IsChecked="{Binding ViewModel.IncludeFinished}"/>
         </StackPanel>
         <DataGrid AutoGenerateColumns="False"
                   IsReadOnly="True"
                   ItemsSource="{Binding ViewModel.Reservationen}">
             <DataGrid.Columns>
-                <DataGridTextColumn Header="ID" Binding="{Binding ReservationsNr}"/>
-                <DataGridTemplateColumn Header="{StaticResource reservation_header_kunde}" SortMemberPath="Kunde.Vorname">
+                <DataGridTextColumn Header="ID" Binding="{Binding ReservationsNr}" Width="40"/>
+                <DataGridTemplateColumn Header="{StaticResource reservation_header_kunde}" SortMemberPath="Kunde.Vorname" Width="0.6*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -28,7 +29,7 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTemplateColumn Header="{StaticResource reservation_header_auto}" SortMemberPath="Auto.Marke">
+                <DataGridTemplateColumn Header="{StaticResource reservation_header_auto}" SortMemberPath="Auto.Marke" Width="1*">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel Orientation="Horizontal">
@@ -40,9 +41,9 @@
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
-                <DataGridTextColumn Header="{StaticResource reservation_header_von}" Binding="{Binding Von}"/>
-                <DataGridTextColumn Header="{StaticResource reservation_header_bis}" Binding="{Binding Bis}"/>
-                <DataGridTemplateColumn>
+                <DataGridTextColumn Header="{StaticResource reservation_header_von}" Binding="{Binding Von, StringFormat=d}" Width="0.6*"/>
+                <DataGridTextColumn Header="{StaticResource reservation_header_bis}" Binding="{Binding Bis, StringFormat=d}" Width="0.6*"/>
+                <DataGridTemplateColumn Width="120">
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>

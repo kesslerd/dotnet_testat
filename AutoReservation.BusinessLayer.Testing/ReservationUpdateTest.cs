@@ -60,6 +60,5 @@ namespace AutoReservation.BusinessLayer.Testing
             Target.Update(r1);
             Target.Update(r2);
         }
-
     }
 }

@@ -12,34 +12,33 @@ using static AutoReservation.UI.Service.Service;
 
 namespace AutoReservation.UI.ViewModels
 {
-    public class KundenViewModel : BaseTabViewModel<KundeDto>
+    public class AutosViewModel : BaseTabViewModel<AutoDto>
     {
-        private List<KundeDto> _kunden;
-        public List<KundeDto> Kunden
+        private List<AutoDto> _autos;
+        public List<AutoDto> Autos
         {
             get
             {
-                return _kunden ?? (_kunden = new List<KundeDto>());
+                return _autos ?? (_autos = new List<AutoDto>());
             }
             private set
             {
-                _kunden = value;
-                OnPropertyChanged(nameof(Kunden));
+                _autos = value;
+                OnPropertyChanged(nameof(Autos));
             }
         }
 
         protected override void ExecuteRefreshCommand()
         {
-            Kunden = AutoReservationService.GetKunden();
+            Autos = AutoReservationService.GetAutos();
         }
 
-        protected override void Delete(KundeDto kunde)
+        protected override void Delete(AutoDto auto)
         {
             try
             {
-                AutoReservationService.DeleteKunde(kunde);
-            }
-            catch (FaultException<DataManipulationFault>)
+                AutoReservationService.DeleteAuto(auto);
+            } catch (FaultException<DataManipulationFault> e)
             {
                 InvokeOnRequestDeleteFailed();
             }
