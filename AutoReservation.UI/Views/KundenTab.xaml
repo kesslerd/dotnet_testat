@@ -9,8 +9,8 @@
              d:DataContext="{d:DesignInstance local:KundenTab}">
     <DockPanel HorizontalAlignment="Stretch">
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <Button Content="{StaticResource action_reload}" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
-            <Button Content="{StaticResource action_add}"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
+            <Button Name="ReloadKundeButton"  Content="{StaticResource action_reload}" Margin="10" Command='{Binding ViewModel.RefreshCommand}'/>
+            <Button Name="AddKundeButton" Content="{StaticResource action_add}"  Margin="10" Command='{Binding ViewModel.AddCommand}'/>
         </StackPanel>
         <DataGrid AutoGenerateColumns="False" 
                   IsReadOnly="True"
@@ -30,8 +30,8 @@
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
                             <StackPanel>
-                                <Button Content="{StaticResource action_edit}" Command="{Binding Path=DataContext.ViewModel.EditCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Id}"/>
-                                <Button Content="{StaticResource action_delete}" Command="{Binding Path=DataContext.ViewModel.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
+                                <Button Name="EditKundeButton" Content="{StaticResource action_edit}" Command="{Binding Path=DataContext.ViewModel.EditCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding Id}"/>
+                                <Button Name="DeleteKundeButton" Content="{StaticResource action_delete}" Command="{Binding Path=DataContext.ViewModel.DeleteCommand, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type UserControl}}}" CommandParameter="{Binding}" />
                             </StackPanel>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>

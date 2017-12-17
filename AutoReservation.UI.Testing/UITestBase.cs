@@ -17,6 +17,7 @@ namespace AutoReservation.UI.Testing
         public void InitializeTestData()
         {
             TestEnvironmentHelper.InitializeTestData();
+            // Could Start Service here
         }
 
         public string BaseDir => Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
